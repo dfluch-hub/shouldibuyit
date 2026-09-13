@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-neutral-950">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Should I Buy It?</title>
+  <meta name="description" content="Translate a purchase price into the amount of working time it costs." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Should I Buy It" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./icon.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    :root{color-scheme:dark}*{-webkit-tap-highlight-color:transparent}html{background:#0a0a0a;overscroll-behavior:none}body{min-height:100vh;min-height:100dvh;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",sans-serif;background:radial-gradient(circle at top,rgba(16,185,129,.08),transparent 28rem),#0a0a0a}input[type=number]{-moz-appearance:textfield}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:9999px;background:#262626;outline:none}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:9999px;background:#fff;border:5px solid #10b981;box-shadow:0 0 0 5px rgba(16,185,129,.09),0 6px 18px rgba(0,0,0,.45)}[x-cloak]{display:none!important}.glass{position:relative;overflow:hidden}.glass:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.04),transparent 35%,transparent 70%,rgba(16,185,129,.035))}@supports(padding:max(0px)){.safe-top{padding-top:max(1.5rem,env(safe-area-inset-top))}.safe-bottom{padding-bottom:max(1.5rem,env(safe-area-inset-bottom))}}
+  </style>
+</head>
+<body class="bg-neutral-950 text-white">
+<main x-data="app()" class="mx-auto min-h-screen min-h-[100dvh] w-full max-w-md px-6 safe-top safe-bottom">
+  <div class="flex min-h-screen min-h-[100dvh] flex-col">
+    <header class="pt-2 pb-8">
+      <div class="mb-5 flex items-center justify-between">
+        <div class="flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-800/70 bg-neutral-900 shadow-lg shadow-black/20 text-emerald-400 text-xl">$</div>
+        <div class="rounded-full border border-neutral-800/80 bg-neutral-900/70 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[.16em] text-neutral-500">Time &gt; Money</div>
+      </div>
+      <p class="mb-2 text-sm font-medium text-emerald-400">Purchase reality check</p>
+      <h1 class="max-w-sm text-[2.4rem] font-bold leading-[.98] tracking-[-.045em] text-white">Should I <span class="text-neutral-500">buy it?</span></h1>
+      <p class="mt-4 max-w-sm text-[15px] leading-6 text-neutral-400">See what a purchase really costs — measured in your working time.</p>
+    </header>
+
+    <section class="glass rounded-[2rem] border border-neutral-800/60 bg-neutral-900/80 p-5 shadow-2xl shadow-black/20">
+      <div class="space-y-5">
+        <div>
+          <label class="mb-2.5 block text-xs font-semibold uppercase tracking-[.13em] text-neutral-500" for="product">Product</label>
+          <input id="product" x-model="product" type="text" autocomplete="off" placeholder="e.g. AirPods Pro" class="h-14 w-full rounded-2xl border border-neutral-700/50 bg-neutral-800 px-4 text-[16px] font-medium text-white outline-none transition placeholder:text-neutral-600 focus:border-emerald-500/70 focus:ring-4 focus:ring-emerald-500/10" />
+        </div>
+        <div>
+          <label class="mb-2.5 block text-xs font-semibold uppercase tracking-[.13em] text-neutral-500" for="price">Price</label>
+          <div class="relative"><span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-lg font-semibold text-neutral-500">€</span><input id="price" x-model="price" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" class="h-14 w-full rounded-2xl border border-neutral-700/50 bg-neutral-800 pl-9 pr-4 text-[17px] font-semibold tabular-nums text-white outline-none transition placeholder:text-neutral-600 focus:border-emerald-500/70 focus:ring-4 focus:ring-emerald-500/10" /></div>
+        </div>
+        <div>
+          <div class="mb-2.5 flex items-end justify-between gap-4"><label for="wage" class="block text-xs font-semibold uppercase tracking-[.13em] text-neutral-500">Net hourly wage</label><span class="text-sm font-semibold tabular-nums text-white" x-text="`€${Number(wage||0).toFixed(0)}/h`"></span></div>
+          <div class="rounded-2xl border border-neutral-700/50 bg-neutral-800 px-4 py-4">
+            <div class="mb-4 flex items-center gap-3"><div class="relative min-w-0 flex-1"><span class="pointer-events-none absolute inset-y-0 left-0 flex items-center text-base font-semibold text-neutral-500">€</span><input x-model.number="wage" type="number" inputmode="decimal" min="0" step="0.5" aria-label="Hourly wage" class="h-9 w-full bg-transparent pl-5 text-[18px] font-semibold tabular-nums text-white outline-none" /></div><span class="text-sm font-medium text-neutral-500">per hour</span></div>
+            <input id="wage" x-model.number="wage" type="range" min="5" max="100" step="1" aria-label="Hourly wage slider" />
+            <div class="mt-2 flex justify-between text-[11px] font-medium text-neutral-600"><span>€5</span><span>€100</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-5">
+      <div class="glass relative min-h-[245px] overflow-hidden rounded-[2rem] border border-emerald-900/40 bg-gradient-to-br from-emerald-950/35 via-neutral-900 to-neutral-900 p-6 shadow-2xl shadow-black/30 transition-all duration-300">
+        <div class="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-emerald-500/[.07] blur-3xl"></div>
+        <div class="relative z-10">
+          <div class="mb-8 flex items-center justify-between"><div><p class="text-xs font-semibold uppercase tracking-[.15em] text-emerald-500/80">Real cost</p><p class="mt-1 text-sm text-neutral-500">Your time to afford it</p></div><div class="flex h-11 w-11 items-center justify-center rounded-2xl border border-emerald-800/30 bg-emerald-950/30 text-emerald-400">◷</div></div>
+          <div x-show="!valid" x-transition.opacity.duration.200ms class="pt-1"><div class="text-[28px] font-bold leading-tight tracking-[-.035em] text-white">Enter details to <span class="text-neutral-500">see the cost in time.</span></div><p class="mt-4 max-w-xs text-sm leading-6 text-neutral-500">Your purchase will be translated into hours and minutes of work.</p></div>
+          <div x-cloak x-show="valid" x-transition.opacity.duration.200ms>
+            <div class="text-[3.55rem] font-bold leading-none tracking-[-.055em] text-white" x-text="formattedTime"></div>
+            <div class="mt-4 flex flex-wrap gap-2"><div class="rounded-full border border-neutral-800 bg-black/20 px-3 py-1.5 text-xs font-medium text-neutral-400" x-text="priceFormatted"></div><div class="rounded-full border border-neutral-800 bg-black/20 px-3 py-1.5 text-xs font-medium text-neutral-400" x-text="formattedDays"></div></div>
+            <p class="mt-5 text-sm leading-6 text-neutral-400"><span x-show="product.trim()" class="font-medium text-neutral-200" x-text="product.trim()"></span><span x-show="product.trim()"> costs you </span><span x-show="!product.trim()">This purchase costs you </span><span class="font-semibold text-emerald-400" x-text="formattedTime"></span><span> of working time.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section x-cloak x-show="valid" x-transition.opacity.duration.300ms class="mt-5 rounded-[1.7rem] border border-neutral-800/50 bg-neutral-900/55 p-4">
+      <p class="text-sm font-semibold text-neutral-200">Before you buy</p><p class="mt-1 text-sm leading-5 text-neutral-500">Ask yourself whether this item is worth <span class="font-medium text-neutral-300" x-text="formattedTime"></span> of your life.</p>
+    </section>
+
+    <footer class="mt-auto pt-8 text-center"><p class="text-[11px] font-medium tracking-wide text-neutral-700">MONEY IS REPLACEABLE. TIME ISN'T.</p></footer>
+  </div>
+</main>
+<script>
+function app(){return{product:'',price:'',wage:20,get valid(){const p=Number(this.price),w=Number(this.wage);return Number.isFinite(p)&&Number.isFinite(w)&&p>0&&w>0},get rawHours(){return this.valid?Number(this.price)/Number(this.wage):0},get totalMinutes(){return this.valid?Math.round(this.rawHours*60):0},get hours(){return Math.floor(this.totalMinutes/60)},get minutes(){return this.totalMinutes%60},get formattedTime(){if(!this.valid)return'';if(this.hours===0)return`${this.minutes}m`;if(this.minutes===0)return`${this.hours}h`;return`${this.hours}h ${this.minutes}m`},get workDays(){return this.valid?this.rawHours/8:0},get formattedDays(){if(!this.valid)return'';const d=this.workDays;return d<1?`${(Math.round(d*80)/10).toFixed(1).replace('.0','')} work hours`:`${d.toFixed(d>=10?0:1)} work days`},get priceFormatted(){if(!this.valid)return'';return new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:2}).format(Number(this.price))}}}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+</script>
+</body>
+</html>
