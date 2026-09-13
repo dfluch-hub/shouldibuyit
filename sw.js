@@ -1,10 +1,11 @@
-const CACHE_NAME = 'should-i-buy-it-v2';
+const CACHE_NAME = 'should-i-buy-it-v3';
 
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
-  './icon.png'
+  './icon.png',
+  './icon-192.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -57,8 +58,11 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url);
 
-  // App icon: cache first for instant offline availability.
-  if (url.origin === self.location.origin && url.pathname.endsWith('/icon.png')) {
+  // App icons: cache first for instant offline availability.
+  if (
+    url.origin === self.location.origin &&
+    (url.pathname.endsWith('/icon.png') || url.pathname.endsWith('/icon-192.png'))
+  ) {
     event.respondWith(
       caches.match(request).then((cached) => {
         if (cached) return cached;
