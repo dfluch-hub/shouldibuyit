@@ -1,0 +1,19 @@
+{
+  "name": "Should I Buy It",
+  "short_name": "Should I Buy It",
+  "description": "See what a purchase really costs in working time.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
