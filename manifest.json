@@ -1,15 +1,17 @@
 {
-  "id": "./",
-  "name": "Should I Buy It",
-  "short_name": "Should I Buy It",
-  "description": "See what a purchase really costs in working time.",
-  "start_url": "./",
+  "name": "Morrow Money",
+  "short_name": "Morrow Money",
+  "description": "Financial Mindset OS: Kosten in Arbeitszeit sehen, Kaufimpulse pausieren, Money Saved verfolgen und Future-Me-Szenarien modellieren.",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
+  "display_override": [
+    "standalone",
+    "fullscreen"
+  ],
+  "background_color": "#111827",
+  "theme_color": "#111827",
   "orientation": "portrait",
-  "prefer_related_applications": false,
   "icons": [
     {
       "src": "./icon-192.png",
@@ -18,7 +20,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "./icon.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

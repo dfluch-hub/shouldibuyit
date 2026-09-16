@@ -1,93 +1,66 @@
-const CACHE_NAME = 'should-i-buy-it-v3';
+const CACHE_NAME = 'morrow-money-v1.0';
 
-const APP_SHELL = [
+const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
-  './icon.png',
-  './icon-192.png'
+  './icon-192.png',
+  './icon-512.png'
+];
+
+const OPTIONAL_REMOTE_ASSETS = [
+  'https://cdn.tailwindcss.com/3.4.17',
+  'https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js',
+  'https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js',
+  'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    await cache.addAll(ASSETS_TO_CACHE);
+    await Promise.allSettled(OPTIONAL_REMOTE_ASSETS.map((asset) => cache.add(asset)));
+  })());
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys
-          .filter((key) => key !== CACHE_NAME)
-          .map((key) => caches.delete(key))
-      )
-    )
-  );
-  self.clients.claim();
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)));
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener('fetch', (event) => {
-  const request = event.request;
-  if (request.method !== 'GET') return;
+  if (event.request.method !== 'GET') return;
 
-  // HTML/navigation: network first so online users always get the newest deploy.
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request, { cache: 'no-store' })
-        .then((response) => {
-          if (response && response.ok) {
-            const copy = response.clone();
-            event.waitUntil(
-              caches.open(CACHE_NAME).then((cache) => cache.put('./index.html', copy))
-            );
-          }
-          return response;
-        })
-        .catch(async () => {
-          return (
-            (await caches.match('./index.html')) ||
-            (await caches.match('./')) ||
-            Response.error()
-          );
-        })
-    );
+  if (event.request.mode === 'navigate') {
+    event.respondWith((async () => {
+      try {
+        const fresh = await fetch(event.request);
+        const cache = await caches.open(CACHE_NAME);
+        cache.put('./index.html', fresh.clone()).catch(() => {});
+        return fresh;
+      } catch (_) {
+        return (await caches.match('./index.html')) || (await caches.match('./'));
+      }
+    })());
     return;
   }
 
-  const url = new URL(request.url);
-
-  // App icons: cache first for instant offline availability.
-  if (
-    url.origin === self.location.origin &&
-    (url.pathname.endsWith('/icon.png') || url.pathname.endsWith('/icon-192.png'))
-  ) {
-    event.respondWith(
-      caches.match(request).then((cached) => {
-        if (cached) return cached;
-        return fetch(request).then((response) => {
-          const copy = response.clone();
-          event.waitUntil(
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy))
-          );
-          return response;
-        });
-      })
-    );
-    return;
-  }
-
-  // Other GET assets: network first, cached fallback.
-  event.respondWith(
-    fetch(request)
-      .then((response) => {
-        const copy = response.clone();
-        event.waitUntil(
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy)).catch(() => {})
-        );
-        return response;
-      })
-      .catch(() => caches.match(request))
-  );
+  event.respondWith((async () => {
+    const cached = await caches.match(event.request);
+    if (cached) return cached;
+    try {
+      const fresh = await fetch(event.request);
+      if (fresh && fresh.ok) {
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(event.request, fresh.clone()).catch(() => {});
+      }
+      return fresh;
+    } catch (_) {
+      return new Response('', { status: 504, statusText: 'Offline' });
+    }
+  })());
 });

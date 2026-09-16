@@ -1,82 +1,2290 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#050505]">
+<html lang="de" class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Should I Buy It?</title>
-<meta name="description" content="Turn a purchase price into working time.">
-<meta name="theme-color" content="#0a0a0a">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Should I Buy It">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="./manifest.json">
-<link rel="apple-touch-icon" href="./icon.png">
-<script src="https://cdn.tailwindcss.com"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<style>
-:root{color-scheme:dark}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{background:#050505;overscroll-behavior:none}body{margin:0;min-height:100vh;min-height:100dvh;overflow-x:hidden;overscroll-behavior:none;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,system-ui,sans-serif;background:radial-gradient(circle at 10% 0%,rgba(16,185,129,.14),transparent 30%),radial-gradient(circle at 95% 20%,rgba(59,130,246,.07),transparent 27%),linear-gradient(180deg,#050505,#070707 52%,#050505)}[x-cloak]{display:none!important}input{font:inherit}input[type=number]{-moz-appearance:textfield}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.glass{background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));backdrop-filter:blur(26px) saturate(145%);-webkit-backdrop-filter:blur(26px) saturate(145%);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 18px 55px rgba(0,0,0,.28)}.result{background:radial-gradient(circle at 88% 5%,rgba(16,185,129,.18),transparent 35%),linear-gradient(150deg,rgba(6,78,59,.28),rgba(12,12,12,.86) 50%,rgba(8,8,8,.96));border:1px solid rgba(52,211,153,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),inset 0 0 42px rgba(16,185,129,.03),0 18px 65px rgba(0,0,0,.45),0 10px 36px rgba(16,185,129,.06);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px)}.line{height:1px;margin-left:52px;background:rgba(255,255,255,.075)}.icon{background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.08)}.lang{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.075)}.lang-on{background:linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.09));box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 4px 14px rgba(0,0,0,.22);color:#fff}.share{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);transition:.18s}.share:active{transform:scale(.96)}.sticky-glass{background:rgba(10,10,10,.60);backdrop-filter:blur(28px) saturate(150%);-webkit-backdrop-filter:blur(28px) saturate(150%)}input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:999px;background:linear-gradient(90deg,#10b981,#34d399);outline:none}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:23px;height:23px;border-radius:999px;background:#fff;border:4px solid #10b981;box-shadow:0 0 0 5px rgba(16,185,129,.08),0 5px 16px rgba(0,0,0,.5)}@supports(padding:max(0px)){.safe-b{padding-bottom:max(20px,env(safe-area-inset-bottom))}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no, interactive-widget=resizes-content" />
+<meta name="description" content="Morrow Money – Financial Mindset OS with Cost vs. Time, Impulse Lab, Graveyard and Future Me." />
+  <title>Morrow Money</title>
+
+  <!-- PWA & Mobile Meta Tags -->
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Morrow Money" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "SF Pro Display", "SF Pro Text", "Segoe UI", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { width: 100%; min-height: 100%; margin: 0; background: #0f172a; overscroll-behavior: none; }
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+      color: #f1f5f9;
+    }
+    button, input, select, textarea { font: inherit; }
+    button { touch-action: manipulation; }
+    [x-cloak] { display: none !important; }
+
+    .app-shell {
+      height: 100dvh;
+      max-height: 100dvh;
+      overflow: hidden;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .view { height: 100%; overflow: hidden; }
+
+    .app-background {
+      background:
+        radial-gradient(circle at 10% 0%, rgba(99,102,241,.13), transparent 28%),
+        radial-gradient(circle at 95% 100%, rgba(16,185,129,.09), transparent 30%),
+        #0f172a;
+    }
+
+    .glass {
+      border: 1px solid rgba(255,255,255,.07);
+      background: rgba(30,41,59,.62);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .module-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 24px;
+      background: rgba(30,41,59,.68);
+      transition: transform 150ms ease, background-color 150ms ease, border-color 150ms ease;
+    }
+    .module-card:active { transform: scale(.975); background: rgba(51,65,85,.78); }
+    .module-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(255,255,255,.035), transparent 45%);
+    }
+
+    .sheet-backdrop {
+      background: rgba(2,6,23,.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .bottom-sheet {
+      max-height: min(88dvh, 760px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      border-top: 1px solid rgba(255,255,255,.09);
+      background: rgba(15,23,42,.99);
+      box-shadow: 0 -30px 100px rgba(0,0,0,.48);
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+
+    @supports (height: 100dvh) {
+      .bottom-sheet {
+        max-height: min(88dvh, 760px);
+      }
+    }
+
+    .money-value {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      min-height: 58px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .input-row:last-child { border-bottom: 0; }
+
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      outline: 0;
+      color: #f8fafc;
+      text-align: right;
+      font-weight: 600;
+    }
+    input::placeholder { color: #475569; font-weight: 500; }
+  </style>
 </head>
-<body class="text-white">
-<main x-data="app()" :lang="lang" class="relative mx-auto min-h-[100dvh] w-full max-w-md safe-b">
-<header class="sticky top-0 z-50 border-b border-white/5 bg-neutral-950/60 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
-  <div class="flex h-[58px] items-center justify-between px-5">
-    <div class="flex min-w-0 items-center gap-2.5">
-      <img src="icon.png" alt="Logo" class="h-7 w-7 rounded-md shadow-sm">
-      <span class="truncate text-[15px] font-semibold tracking-tight text-white">Should I Buy It</span>
+
+<body x-data x-cloak class="app-background">
+<main class="app-shell">
+
+  <div x-show="$store.spine.ui.storageWarning" x-transition class="fixed left-4 right-4 top-[max(12px,env(safe-area-inset-top))] z-[120] mx-auto max-w-md rounded-2xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-center text-[11px] leading-4 text-amber-200 shadow-xl" style="display:none;">
+    Speicher ist nicht verfügbar. Bitte Private Browsing deaktivieren, damit Morrow Money deine Daten dauerhaft speichern kann.
+  </div>
+
+  <!-- FIRST-RUN ONBOARDING -->
+  <div
+    x-show="$store.spine.ui.showOnboarding"
+    class="fixed inset-0 z-[100] flex min-h-[100dvh] flex-col items-center justify-center bg-slate-900 p-6 pt-[max(24px,env(safe-area-inset-top))] pb-[max(24px,env(safe-area-inset-bottom))]"
+    x-transition.opacity
+    style="display:none;"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Morrow Money Einführung"
+  >
+    <!-- Screen 1: Impuls -->
+    <div
+      x-show="$store.spine.ui.onboardingStep === 1"
+      class="w-full max-w-sm text-center"
+      x-transition
+    >
+      <div class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-slate-700 bg-slate-800 p-6">
+        <i data-lucide="clock" class="h-12 w-12 text-sky-400"></i>
+      </div>
+
+      <h2 class="mb-3 text-2xl font-bold text-white">Stopp den Impuls</h2>
+
+      <p class="mb-8 leading-relaxed text-slate-400">
+        Du willst etwas kaufen? Trag es ein und leg eine Wartezeit fest. Oft verfliegt der Drang ganz von alleine.
+      </p>
     </div>
-    <div class="lang flex shrink-0 rounded-full p-[3px]">
-      <button type="button" @click="lang='en'" :class="lang==='en'?'lang-on':'text-neutral-500'" class="rounded-full px-3 py-1.5 text-[11px] font-semibold">EN</button>
-      <button type="button" @click="lang='de'" :class="lang==='de'?'lang-on':'text-neutral-500'" class="rounded-full px-3 py-1.5 text-[11px] font-semibold">DE</button>
+
+    <!-- Screen 2: Graveyard -->
+    <div
+      x-show="$store.spine.ui.onboardingStep === 2"
+      class="w-full max-w-sm text-center"
+      style="display:none;"
+      x-transition
+    >
+      <div class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-slate-700 bg-slate-800 p-6">
+        <i data-lucide="ghost" class="h-12 w-12 text-violet-400"></i>
+      </div>
+
+      <h2 class="mb-3 text-2xl font-bold text-white">Der Graveyard</h2>
+
+      <p class="mb-8 leading-relaxed text-slate-400">
+        Wartezeit vorbei und du brauchst es doch nicht? Beerdige den Kauf auf dem Graveyard und feiere das gesparte Geld.
+      </p>
+    </div>
+
+    <!-- Screen 3: Future Me -->
+    <div
+      x-show="$store.spine.ui.onboardingStep === 3"
+      class="w-full max-w-sm text-center"
+      style="display:none;"
+      x-transition
+    >
+      <div class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-slate-700 bg-slate-800 p-6">
+        <i data-lucide="rocket" class="h-12 w-12 text-emerald-400"></i>
+      </div>
+
+      <h2 class="mb-3 text-2xl font-bold text-white">Future Me</h2>
+
+      <p class="mb-8 leading-relaxed text-slate-400">
+        Dein gespartes Geld arbeitet für dich. Schau dir an, wie dein virtuelles Vermögen durch Zinseszins wachsen könnte.
+      </p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="mt-auto w-full max-w-sm pb-[env(safe-area-inset-bottom)] mb-8">
+      <div class="mb-8 flex justify-center space-x-3">
+        <div
+          class="h-2 w-2 rounded-full transition-colors"
+          :class="$store.spine.ui.onboardingStep === 1 ? 'bg-white' : 'bg-slate-600'"
+        ></div>
+
+        <div
+          class="h-2 w-2 rounded-full transition-colors"
+          :class="$store.spine.ui.onboardingStep === 2 ? 'bg-white' : 'bg-slate-600'"
+        ></div>
+
+        <div
+          class="h-2 w-2 rounded-full transition-colors"
+          :class="$store.spine.ui.onboardingStep === 3 ? 'bg-white' : 'bg-slate-600'"
+        ></div>
+      </div>
+
+      <button
+        type="button"
+        @click="$store.spine.nextOnboardingStep()"
+        class="w-full rounded-xl bg-white py-4 text-lg font-bold text-slate-900 transition-colors active:scale-[.99]"
+      >
+        <span x-text="$store.spine.ui.onboardingStep === 3 ? 'Loslegen 🚀' : 'Weiter'"></span>
+      </button>
     </div>
   </div>
-</header>
-<div class="flex min-h-[100dvh] flex-col px-5 pt-6">
-<section class="pb-5">
-<p class="mb-2 text-[12px] font-semibold uppercase tracking-[.15em] text-emerald-400" x-text="t('eyebrow')"></p>
-<h1 class="max-w-[325px] text-[2.5rem] font-bold leading-[.98] tracking-[-.055em]"><span x-text="t('title1')"></span><span class="text-neutral-500" x-text="t('title2')"></span></h1>
-<p class="mt-3 max-w-[335px] text-[14px] leading-[1.55] text-neutral-400" x-text="t('subtitle')"></p>
-</section>
-<section class="glass overflow-hidden rounded-[24px]">
-<div class="flex min-h-[64px] items-center gap-3 px-4"><div class="icon flex h-9 w-9 items-center justify-center rounded-[11px]">🛍</div><div class="min-w-0 flex-1 py-3"><label class="mb-[3px] block text-[11px] text-neutral-500" x-text="t('productLabel')"></label><input x-model="product" :placeholder="t('productPlaceholder')" class="w-full bg-transparent text-[16px] font-medium outline-none placeholder:text-neutral-700"></div></div>
-<div class="line"></div>
-<div class="flex min-h-[64px] items-center gap-3 px-4"><div class="icon flex h-9 w-9 items-center justify-center rounded-[11px] font-semibold" x-text="currencySymbol"></div><div class="min-w-0 flex-1 py-3"><label class="mb-[3px] block text-[11px] text-neutral-500" x-text="t('priceLabel')"></label><div class="flex items-center"><span class="mr-1 text-neutral-500" x-text="currencySymbol"></span><input x-model="price" type="number" inputmode="decimal" min="0" step="0.01" :placeholder="t('pricePlaceholder')" class="min-w-0 flex-1 bg-transparent text-[16px] font-medium tabular-nums outline-none placeholder:text-neutral-700"></div></div></div>
-<div class="line"></div>
-<div class="px-4 py-3.5"><div class="flex items-center gap-3"><div class="icon flex h-9 w-9 items-center justify-center rounded-[11px]">#</div><div class="min-w-0 flex-1"><div class="flex items-center justify-between gap-4"><div><label class="block text-[11px] text-neutral-500" x-text="t('wageLabel')"></label><div class="mt-[3px] flex items-baseline"><span class="mr-1 text-neutral-500" x-text="currencySymbol"></span><input x-model.number="wage" type="number" inputmode="decimal" min="0" step="0.5" class="w-[76px] bg-transparent text-[16px] font-medium tabular-nums outline-none"><span class="ml-1 text-[13px] text-neutral-500" x-text="t('perHour')"></span></div></div><div class="rounded-full border border-white/5 bg-black/20 px-2.5 py-1 text-[11px] text-neutral-400" x-text="`${currencySymbol}${Number(wage||0).toFixed(0)}/h`"></div></div><div class="mt-3"><input x-model.number="wage" type="range" min="5" max="100" step="1"><div class="mt-1.5 flex justify-between text-[10px] text-neutral-700"><span x-text="`${currencySymbol}5`"></span><span x-text="`${currencySymbol}100`"></span></div></div></div></div></div>
-</section>
-<section class="mt-4"><div class="result relative overflow-hidden rounded-[28px] px-5 py-5"><div class="relative z-10"><div class="flex items-start justify-between gap-4"><div><p class="text-[11px] font-semibold uppercase tracking-[.14em] text-emerald-400" x-text="t('resultEyebrow')"></p><p class="mt-1 text-[13px] text-neutral-500" x-text="t('resultSubtitle')"></p></div><button x-show="valid" x-cloak @click="shareResult()" class="share flex h-10 w-10 items-center justify-center rounded-[13px]" :aria-label="t('share')"><svg viewBox="0 0 24 24" fill="none" class="h-[17px] w-[17px]" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M12 15V3m0 0 4 4m-4-4L8 7"></path><path stroke-linecap="round" d="M6.5 10.5h-1A2.5 2.5 0 003 13v5.5A2.5 2.5 0 005.5 21h13a2.5 2.5 0 002.5-2.5V13a2.5 2.5 0 00-2.5-2.5h-1"></path></svg></button></div>
-<div x-show="!valid" class="pb-2 pt-7"><h2 class="max-w-[300px] text-[27px] font-bold leading-[1.08] tracking-[-.035em]"><span x-text="t('emptyTitle1')"></span><span class="text-neutral-500" x-text="t('emptyTitle2')"></span></h2><p class="mt-3 max-w-[290px] text-[13px] leading-5 text-neutral-500" x-text="t('emptyDescription')"></p></div>
-<div x-cloak x-show="valid" class="pt-7"><div class="text-[3.85rem] font-bold leading-[.9] tracking-[-.065em]" x-text="formattedTime"></div><div class="mt-4 flex flex-wrap gap-2"><span class="rounded-full border border-white/10 bg-white/[.035] px-2.5 py-1 text-[11px] text-neutral-400" x-text="priceFormatted"></span><span class="rounded-full border border-white/10 bg-white/[.035] px-2.5 py-1 text-[11px] text-neutral-400" x-text="formattedDays"></span></div><p class="mt-4 text-[13px] leading-5 text-neutral-400"><template x-if="product.trim()"><span><span class="font-medium text-neutral-200" x-text="product.trim()"></span><span x-text="t('costsYou')"></span></span></template><template x-if="!product.trim()"><span x-text="t('thisPurchaseCosts')"></span></template><span class="font-semibold text-emerald-400" x-text="formattedTime"></span><span x-text="t('workingTimeSuffix')"></span></p></div></div></div></section>
-<section x-cloak x-show="valid" class="glass mt-3 rounded-[22px] px-4 py-4"><p class="text-[13px] font-semibold" x-text="t('beforeBuy')"></p><p class="mt-1 text-[12px] leading-[1.55] text-neutral-500"><span x-text="t('askWorth')"></span><span class="font-medium text-neutral-300" x-text="formattedTime"></span><span x-text="t('ofYourLife')"></span></p></section>
-<footer class="mt-auto pt-7 text-center"><p class="text-[10px] font-semibold uppercase tracking-[.14em] text-neutral-700" x-text="t('footer')"></p></footer>
-</div>
+
+  <!-- DASHBOARD -->
+  <section x-show="$store.spine.ui.currentView === 'dashboard'" x-transition.opacity.duration.150ms class="view">
+    <div class="mx-auto flex h-full w-full max-w-md flex-col px-4 pb-4 pt-3">
+
+      <header class="flex shrink-0 items-center justify-between pb-3">
+        <div>
+          <div class="text-[11px] font-semibold uppercase tracking-[.18em] text-slate-500">Morrow</div>
+          <h1 class="mt-.5 text-[20px] font-semibold tracking-tight text-slate-100">Money</h1>
+        </div>
+        <button type="button"
+          @click="$store.spine.openSheet('settings')"
+          class="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/5 bg-slate-800/70 text-slate-400 active:scale-95"
+          aria-label="Einstellungen">
+          <i data-lucide="settings-2" class="h-[18px] w-[18px]"></i>
+        </button>
+      </header>
+
+      <!-- HERO -->
+      <section class="relative shrink-0 overflow-hidden rounded-[28px] border border-emerald-400/10 bg-emerald-400/[.06] px-5 py-5">
+        <div class="absolute -right-8 -top-10 h-32 w-32 rounded-full bg-emerald-400/10 blur-3xl"></div>
+        <div class="relative z-10">
+          <div class="flex items-center gap-2 text-xs font-medium text-emerald-300/75">
+            <span class="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-400/10 text-emerald-300">
+              <i data-lucide="piggy-bank" class="h-4 w-4"></i>
+            </span>
+            Money Saved
+          </div>
+
+          <div class="mt-3 flex items-end justify-between gap-4">
+            <div class="min-w-0">
+              <div class="money-value text-[38px] font-semibold leading-none tracking-[-.045em] text-slate-50"
+                   x-text="$store.spine.formatMoney($store.spine.data.stats.moneySaved)"></div>
+              <p class="mt-2 text-xs leading-relaxed text-slate-500">
+                Bewusst nicht ausgegeben.
+              </p>
+            </div>
+
+            <div class="shrink-0 rounded-2xl bg-slate-900/60 px-3 py-2 text-right">
+              <div class="text-[10px] uppercase tracking-wider text-slate-600">Skipped</div>
+              <div class="mt-.5 text-sm font-semibold text-slate-300"
+                   x-text="$store.spine.data.stats.skippedCount"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODULE GRID -->
+      <section class="grid min-h-0 flex-1 grid-cols-2 grid-rows-2 gap-3 pt-3">
+
+        <button type="button"
+          @click="$store.spine.setView('costTime')"
+          class="module-card flex h-full flex-col items-start justify-between p-4 text-left">
+          <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-400/10 text-indigo-300">
+            <i data-lucide="clock-3" class="h-5 w-5"></i>
+          </span>
+          <div>
+            <div class="text-[15px] font-semibold tracking-tight text-slate-100">Cost vs. Time</div>
+            <div class="mt-1 text-[11px] leading-4 text-slate-500">What does it really cost?</div>
+          </div>
+        </button>
+
+        <button type="button"
+          @click="$store.spine.setView('impulseTimer')"
+          class="module-card flex h-full flex-col items-start justify-between p-4 text-left">
+          <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-400/10 text-rose-300">
+            <i data-lucide="timer-reset" class="h-5 w-5"></i>
+          </span>
+          <div>
+            <div class="flex items-center gap-2 text-[15px] font-semibold tracking-tight text-slate-100">
+              Impulse Timer
+              <span x-show="$store.spine.data.impulseTimer.items.length > 0"
+                    class="rounded-full bg-rose-400/10 px-1.5 py-.5 text-[9px] text-rose-300"
+                    x-text="$store.spine.data.impulseTimer.items.length"></span>
+            </div>
+            <div class="mt-1 text-[11px] leading-4 text-slate-500">Pause before you buy.</div>
+          </div>
+        </button>
+
+        <button type="button"
+          @click="$store.spine.setView('graveyard')"
+          class="module-card flex h-full flex-col items-start justify-between p-4 text-left">
+          <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-700/80 text-slate-300">
+            <i data-lucide="archive-x" class="h-5 w-5"></i>
+          </span>
+          <div>
+            <div class="flex items-center gap-2 text-[15px] font-semibold tracking-tight text-slate-100">
+              Graveyard
+              <span x-show="$store.spine.data.graveyard.items.length > 0"
+                    class="rounded-full bg-white/5 px-1.5 py-.5 text-[9px] text-slate-400"
+                    x-text="$store.spine.data.graveyard.items.length"></span>
+            </div>
+            <div class="mt-1 text-[11px] leading-4 text-slate-500">Things you didn't buy.</div>
+          </div>
+        </button>
+
+        <button type="button"
+          @click="$store.spine.setView('futureMe')"
+          class="module-card flex h-full flex-col items-start justify-between p-4 text-left">
+          <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-400/10 text-emerald-300">
+            <i data-lucide="sprout" class="h-5 w-5"></i>
+          </span>
+          <div>
+            <div class="text-[15px] font-semibold tracking-tight text-slate-100">Future Me</div>
+            <div class="mt-1 text-[11px] leading-4 text-slate-500">See what money can become.</div>
+          </div>
+        </button>
+
+      </section>
+    </div>
+  </section>
+
+  <!-- COST VS TIME -->
+  <section x-show="$store.spine.ui.currentView === 'costTime'" x-transition.opacity.duration.150ms class="view">
+    <div class="mx-auto flex h-full w-full max-w-md flex-col px-4 pb-4 pt-3">
+
+      <header class="flex shrink-0 items-center justify-between pb-3">
+        <div class="flex items-center gap-3">
+          <button type="button" @click="$store.spine.goHome()"
+            class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-slate-300 active:scale-95"
+            aria-label="Zurück">
+            <i data-lucide="arrow-left" class="h-[18px] w-[18px]"></i>
+          </button>
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[.18em] text-slate-600">Should I Buy It?</div>
+            <h2 class="text-lg font-semibold tracking-tight">Cost vs. Time</h2>
+          </div>
+        </div>
+
+        <button type="button" @click="$store.spine.openCostSheet()"
+          class="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-400 text-slate-950 active:scale-95"
+          aria-label="Neue Analyse">
+          <i data-lucide="plus" class="h-[18px] w-[18px]"></i>
+        </button>
+      </header>
+
+      <!-- EMPTY STATE -->
+      <div x-show="!$store.spine.ui.costResult"
+           class="glass flex min-h-0 flex-1 flex-col items-center justify-center rounded-[28px] p-6 text-center">
+        <div class="flex h-14 w-14 items-center justify-center rounded-[20px] bg-indigo-400/10 text-indigo-300">
+          <i data-lucide="calculator" class="h-6 w-6"></i>
+        </div>
+        <h3 class="mt-4 text-lg font-semibold">Was kostet es wirklich?</h3>
+        <p class="mt-2 max-w-[255px] text-xs leading-5 text-slate-500">
+          Übersetze den Preis in Arbeitszeit – bevor aus einem Impuls eine Ausgabe wird.
+        </p>
+        <button type="button" @click="$store.spine.openCostSheet()"
+          class="mt-6 rounded-2xl bg-indigo-400 px-5 py-3 text-sm font-semibold text-slate-950 active:scale-[.98]">
+          Kauf analysieren
+        </button>
+      </div>
+
+      <!-- RESULT -->
+      <div x-show="$store.spine.ui.costResult"
+           class="flex min-h-0 flex-1 flex-col gap-3">
+
+        <section class="glass relative overflow-hidden rounded-[28px] p-5">
+          <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-indigo-400/10 blur-3xl"></div>
+
+          <div class="relative">
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <div class="text-[10px] font-semibold uppercase tracking-[.16em] text-slate-600">You want</div>
+                <div class="mt-1 truncate text-lg font-semibold text-slate-100"
+                     x-text="$store.spine.ui.costResult?.product"></div>
+              </div>
+              <div class="shrink-0 rounded-2xl bg-slate-900/70 px-3 py-2 text-sm font-semibold"
+                   x-text="$store.spine.formatMoney($store.spine.ui.costResult?.price || 0)"></div>
+            </div>
+
+            <div class="mt-5">
+              <div class="text-[11px] font-medium text-indigo-300/70">This costs you</div>
+              <div class="mt-1 text-[42px] font-semibold leading-none tracking-[-.05em] text-white"
+                   x-text="$store.spine.formatWorkTime($store.spine.ui.costResult?.minutes || 0)"></div>
+              <div class="mt-2 text-xs text-slate-500">
+                Arbeitszeit bei
+                <span class="font-medium text-slate-400"
+                      x-text="$store.spine.formatMoney($store.spine.ui.costResult?.hourlyWage || 0) + '/h'"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid grid-cols-2 gap-3">
+          <div class="glass rounded-[22px] p-4">
+            <div class="text-[10px] uppercase tracking-wider text-slate-600">Workdays</div>
+            <div class="mt-1 text-xl font-semibold"
+                 x-text="$store.spine.formatNumber(($store.spine.ui.costResult?.hours || 0) / 8, 1)"></div>
+            <div class="mt-1 text-[10px] text-slate-600">à 8 Stunden</div>
+          </div>
+
+          <div class="glass rounded-[22px] p-4">
+            <div class="text-[10px] uppercase tracking-wider text-slate-600">Mindset</div>
+            <div class="mt-1 text-sm font-semibold"
+                 x-text="$store.spine.costWeightLabel($store.spine.ui.costResult?.hours || 0)"></div>
+            <div class="mt-1 text-[10px] text-slate-600">relative Zeitlast</div>
+          </div>
+        </section>
+
+        <section class="glass min-h-0 flex-1 rounded-[22px] p-4">
+          <div class="flex items-start gap-3">
+            <span class="mt-.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-indigo-400/10 text-indigo-300">
+              <i data-lucide="brain" class="h-4 w-4"></i>
+            </span>
+            <div>
+              <div class="text-xs font-semibold text-slate-300">One question</div>
+              <div class="mt-1 text-xs leading-5 text-slate-500"
+                   x-text="$store.spine.reflectionPrompt($store.spine.ui.costResult?.hours || 0)"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="grid shrink-0 grid-cols-3 gap-2">
+          <button type="button" @click="$store.spine.decideBuy()"
+            class="rounded-2xl border border-white/5 bg-slate-800 px-2 py-3 text-[11px] font-semibold text-slate-300 active:scale-[.98]">
+            Kaufen
+          </button>
+          <button type="button" @click="$store.spine.decideWait()"
+            class="rounded-2xl bg-rose-400/10 px-2 py-3 text-[11px] font-semibold text-rose-300 active:scale-[.98]">
+            48h warten
+          </button>
+          <button type="button" @click="$store.spine.decideSkip()"
+            class="rounded-2xl bg-emerald-400 px-2 py-3 text-[11px] font-bold text-slate-950 active:scale-[.98]">
+            Nicht kaufen
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPULSE TIMER / BEHAVIOR LAB -->
+  <section x-show="$store.spine.ui.currentView === 'impulseTimer'" x-transition.opacity.duration.150ms class="view">
+    <div class="mx-auto flex h-full w-full max-w-md flex-col px-4 pb-4 pt-3">
+      <header class="flex shrink-0 items-center justify-between pb-3">
+        <div class="flex items-center gap-3">
+          <button type="button" @click="$store.spine.goHome()"
+            class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-slate-300 active:scale-95">
+            <i data-lucide="arrow-left" class="h-[18px] w-[18px]"></i>
+          </button>
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[.18em] text-rose-300/50">Behavior Lab</div>
+            <h2 class="text-lg font-semibold tracking-tight">Impulse Timer</h2>
+          </div>
+        </div>
+
+        <div x-show="$store.spine.data.impulseTimer.items.length > 0"
+             class="rounded-2xl bg-rose-400/[.08] px-3 py-2 text-right">
+          <div class="text-[9px] uppercase tracking-wider text-rose-300/50">Paused</div>
+          <div class="text-sm font-semibold text-rose-200" x-text="$store.spine.data.impulseTimer.items.length"></div>
+        </div>
+      </header>
+
+      <div class="glass min-h-0 flex-1 overflow-hidden rounded-[28px] p-4">
+        <template x-if="$store.spine.data.impulseTimer.items.length === 0">
+          <div class="flex h-full flex-col items-center justify-center text-center">
+            <div class="flex h-14 w-14 items-center justify-center rounded-[20px] bg-rose-400/10 text-rose-300">
+              <i data-lucide="timer-reset" class="h-6 w-6"></i>
+            </div>
+            <h3 class="mt-4 text-base font-semibold">Pause the impulse.</h3>
+            <p class="mt-2 max-w-[250px] text-xs leading-5 text-slate-500">
+              Bei Cost vs. Time kannst du einen Kauf für 48 Stunden parken. Danach entscheidest du mit Abstand statt im Moment.
+            </p>
+          </div>
+        </template>
+
+        <div x-show="$store.spine.data.impulseTimer.items.length > 0"
+             class="h-full space-y-3 overflow-y-auto pr-1">
+          <template x-for="item in $store.spine.data.impulseTimer.items" :key="item.id">
+            <article
+              class="relative rounded-[22px] border bg-slate-900/45 p-4 transition-colors"
+              :class="$store.spine.isImpulseReady(item) ? 'border-rose-400/40' : 'border-white/5'">
+              <div x-show="$store.spine.isImpulseReady(item)"
+                   class="absolute -right-1.5 -top-1.5">
+                <span class="relative flex h-4 w-4">
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-60"></span>
+                  <span class="relative inline-flex h-4 w-4 rounded-full bg-rose-400"></span>
+                </span>
+              </div>
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="w-full truncate text-sm font-semibold text-slate-100" x-text="item.product"></div>
+                  <div class="mt-1 text-[11px] text-slate-500">
+                    <span x-text="$store.spine.formatMoney(item.price)"></span>
+                    <span class="px-1 text-slate-700">·</span>
+                    <span x-text="$store.spine.formatWorkTime(item.minutes)"></span>
+                  </div>
+                </div>
+
+                <span class="shrink-0 rounded-xl px-2.5 py-1 text-[10px] font-semibold"
+                      :class="$store.spine.isImpulseReady(item) ? 'bg-emerald-400/10 text-emerald-300' : 'bg-rose-400/10 text-rose-300'"
+                      x-text="$store.spine.waitLabel(item.expiresAt)"></span>
+              </div>
+
+              <div class="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-800">
+                <div class="h-full rounded-full bg-rose-300 transition-all duration-500"
+                     :style="'width:' + $store.spine.impulseProgress(item) + '%'"></div>
+              </div>
+
+              <div class="mt-3 flex flex-wrap items-center gap-2">
+                <span class="rounded-xl bg-slate-800/80 px-2 py-1 text-[9px] font-medium text-slate-400"
+                      x-text="$store.spine.impulseReasonLabel(item.reason)"></span>
+                <span class="rounded-xl bg-slate-800/80 px-2 py-1 text-[9px] font-medium text-slate-400">
+                  Want <span class="text-slate-200" x-text="$store.spine.currentDesire(item) + '/5'"></span>
+                </span>
+                <span x-show="item.checkIns?.length"
+                      class="rounded-xl bg-indigo-400/[.08] px-2 py-1 text-[9px] font-medium text-indigo-300">
+                  <span x-text="item.checkIns?.length || 0"></span> check-in
+                </span>
+              </div>
+
+              <p x-show="item.note"
+                 class="mt-3 line-clamp-2 text-[10px] leading-4 text-slate-600"
+                 x-text="item.note"></p>
+
+              <div x-show="$store.spine.isImpulseReady(item)"
+                   class="mt-3 flex items-center gap-2 text-[10px] font-semibold text-rose-300">
+                <i data-lucide="alarm-clock-check" class="h-3.5 w-3.5"></i>
+                Wartezeit abgelaufen – Entscheidung steht an.
+              </div>
+
+              <div x-show="!$store.spine.isImpulseReady(item)" class="mt-4">
+                <div class="grid grid-cols-2 gap-2">
+                  <button type="button" @click="$store.spine.openImpulseCheckin(item.id)"
+                    class="rounded-xl bg-indigo-400/[.08] py-2.5 text-[10px] font-semibold text-indigo-300 active:scale-[.98]">
+                    Check-in
+                  </button>
+                  <button type="button" @click="$store.spine.timerSkip(item.id)"
+                    class="rounded-xl bg-emerald-400/[.08] py-2.5 text-[10px] font-semibold text-emerald-300 active:scale-[.98]">
+                    Release
+                  </button>
+                </div>
+
+                <button type="button" @click="$store.spine.addImpulseToCalendar(item)"
+                  class="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-sky-400/[.08] py-2.5 text-[10px] font-semibold text-sky-300 active:scale-[.98]">
+                  <i data-lucide="calendar-plus" class="h-3.5 w-3.5"></i>
+                  In Kalender eintragen
+                </button>
+              </div>
+
+              <div x-show="$store.spine.isImpulseReady(item)" class="mt-4">
+                <div class="mb-2 flex items-center gap-2 rounded-xl bg-emerald-400/[.06] px-3 py-2 text-[10px] text-emerald-300">
+                  <i data-lucide="check-circle-2" class="h-3.5 w-3.5"></i>
+                  48 Stunden vorbei. Jetzt bewusst entscheiden.
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <button type="button" @click="$store.spine.openImpulseCheckin(item.id)"
+                    class="rounded-xl bg-indigo-400/[.08] py-2.5 text-[10px] font-semibold text-indigo-300 active:scale-[.98]">
+                    Check-in
+                  </button>
+                  <button type="button" @click="$store.spine.timerBuy(item.id)"
+                    class="rounded-xl bg-slate-800 py-2.5 text-[10px] font-semibold text-slate-400 active:scale-[.98]">
+                    Buy
+                  </button>
+                  <button type="button" @click="$store.spine.timerSkip(item.id)"
+                    class="rounded-xl bg-emerald-400 py-2.5 text-[10px] font-bold text-slate-950 active:scale-[.98]">
+                    Release
+                  </button>
+                </div>
+
+                <button type="button" @click="$store.spine.addImpulseToCalendar(item)"
+                  class="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-sky-400/[.08] py-2.5 text-[10px] font-semibold text-sky-300 active:scale-[.98]">
+                  <i data-lucide="calendar-plus" class="h-3.5 w-3.5"></i>
+                  Kalender-Erinnerung
+                </button>
+              </div>
+            </article>
+          </template>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRAVEYARD -->
+  <section x-show="$store.spine.ui.currentView === 'graveyard'" x-transition.opacity.duration.150ms class="view">
+    <div class="mx-auto flex h-full w-full max-w-md flex-col px-4 pb-4 pt-3">
+      <header class="flex shrink-0 items-center gap-3 pb-3">
+        <button type="button" @click="$store.spine.goHome()"
+          class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-slate-300 active:scale-95">
+          <i data-lucide="arrow-left" class="h-[18px] w-[18px]"></i>
+        </button>
+        <div>
+          <div class="text-[10px] font-semibold uppercase tracking-[.18em] text-slate-600">Morrow Money</div>
+          <h2 class="text-lg font-semibold tracking-tight">Graveyard</h2>
+        </div>
+      </header>
+
+      <div class="glass min-h-0 flex-1 overflow-hidden rounded-[28px] p-4">
+        <template x-if="$store.spine.data.graveyard.items.length === 0">
+          <div class="flex h-full flex-col items-center justify-center text-center">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-700/70 text-slate-300">
+              <i data-lucide="archive-x" class="h-5 w-5"></i>
+            </div>
+            <h3 class="mt-4 text-sm font-semibold">Noch leer</h3>
+            <p class="mt-1 max-w-[235px] text-xs leading-5 text-slate-500">
+              Dinge, gegen die du dich bewusst entscheidest, landen hier – als sichtbarer Fortschritt.
+            </p>
+          </div>
+        </template>
+
+        <div x-show="$store.spine.data.graveyard.items.length > 0"
+             class="h-full space-y-2 overflow-y-auto pr-1">
+          <template x-for="item in $store.spine.data.graveyard.items" :key="item.id">
+            <div class="rounded-[20px] border border-white/5 bg-slate-900/45 p-4">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="w-full truncate text-sm font-semibold text-slate-200" x-text="item.product"></div>
+                  <div class="mt-1 flex items-center gap-2 text-[10px] text-slate-600">
+                    <span x-text="$store.spine.formatDate(item.createdAt)"></span>
+                    <span x-show="item.reason" class="rounded-lg bg-white/[.04] px-1.5 py-.5 text-[9px] text-slate-500"
+                          x-text="$store.spine.impulseReasonLabel(item.reason)"></span>
+                  </div>
+                </div>
+                <div class="shrink-0 text-right">
+                  <div class="text-sm font-semibold text-emerald-300" x-text="$store.spine.formatMoney(item.price)"></div>
+                  <div class="mt-.5 text-[9px] text-slate-600">kept</div>
+                </div>
+              </div>
+              <div class="mt-3 flex items-center gap-2 text-[10px] text-slate-500">
+                <i data-lucide="clock-3" class="h-3.5 w-3.5"></i>
+                <span x-text="$store.spine.formatWorkTime(item.minutes) + ' zurückgewonnen'"></span>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUTURE ME -->
+  <section x-show="$store.spine.ui.currentView === 'futureMe'" x-transition.opacity.duration.150ms class="view">
+    <div class="mx-auto flex h-full w-full max-w-md flex-col px-4 pb-4 pt-3">
+      <header class="flex shrink-0 items-center justify-between pb-3">
+        <div class="flex items-center gap-3">
+          <button type="button" @click="$store.spine.goHome()"
+            class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-slate-300 active:scale-95"
+            aria-label="Zurück">
+            <i data-lucide="arrow-left" class="h-[18px] w-[18px]"></i>
+          </button>
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[.18em] text-emerald-300/50">Future Me</div>
+            <h2 class="text-lg font-semibold tracking-tight">What could it become?</h2>
+          </div>
+        </div>
+
+        <button type="button"
+          x-show="$store.spine.data.stats.moneySaved > 0"
+          @click="$store.spine.openFutureSheet()"
+          class="flex h-10 items-center gap-2 rounded-2xl bg-emerald-400/10 px-3 text-[10px] font-semibold text-emerald-300 active:scale-95"
+          aria-label="Szenario bearbeiten">
+          <i data-lucide="sliders-horizontal" class="h-4 w-4"></i>
+          <span x-text="$store.spine.data.futureMe.years + 'y'"></span>
+        </button>
+      </header>
+
+      <template x-if="$store.spine.data.stats.moneySaved <= 0">
+        <div class="glass flex min-h-0 flex-1 flex-col items-center justify-center rounded-[28px] p-7 text-center">
+          <div class="flex h-14 w-14 items-center justify-center rounded-[20px] bg-slate-800 text-slate-500">
+            <i data-lucide="sprout" class="h-6 w-6"></i>
+          </div>
+          <h3 class="mt-4 text-base font-semibold text-white">Noch keine Ersparnisse</h3>
+          <p class="mt-2 max-w-[255px] text-xs leading-5 text-slate-500">
+            Verzichte auf einen Kaufimpuls und schicke ihn ins Graveyard. Future Me zeigt dir dann, was dieses Geld langfristig werden könnte.
+          </p>
+          <button type="button"
+            @click="$store.spine.setView('costTime')"
+            class="mt-6 rounded-2xl bg-emerald-400 px-5 py-3 text-xs font-bold text-slate-950 active:scale-[.98]">
+            Kauf analysieren
+          </button>
+        </div>
+      </template>
+
+      <template x-if="$store.spine.data.stats.moneySaved > 0">
+        <div class="flex min-h-0 flex-1 flex-col gap-3">
+          <section class="grid shrink-0 grid-cols-2 gap-3">
+            <div class="glass rounded-[22px] p-4">
+              <div class="text-[10px] uppercase tracking-wider text-slate-600">Heute gespart</div>
+              <div class="money-value mt-1 text-lg font-semibold text-white"
+                   x-text="$store.spine.formatCompactMoney($store.spine.data.stats.moneySaved)"></div>
+            </div>
+
+            <div class="relative overflow-hidden rounded-[22px] border border-emerald-400/10 bg-emerald-400/[.06] p-4">
+              <div class="absolute -right-2 -top-2 opacity-10">
+                <i data-lucide="trending-up" class="h-14 w-14 text-emerald-400"></i>
+              </div>
+              <div class="relative">
+                <div class="text-[10px] uppercase tracking-wider text-emerald-300/60">
+                  In <span x-text="$store.spine.data.futureMe.years"></span> Jahren
+                </div>
+                <div class="money-value mt-1 text-lg font-semibold text-emerald-300"
+                     x-text="$store.spine.formatCompactMoney($store.spine.futureValue())"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="glass relative min-h-0 flex-1 overflow-hidden rounded-[28px] p-4">
+            <div class="mb-3 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-semibold text-slate-300">Growth scenario</div>
+                <div class="mt-.5 text-[10px] text-slate-600">
+                  <span x-text="$store.spine.formatPercent($store.spine.data.futureMe.annualReturn)"></span>
+                  p.a. · hypothetical
+                </div>
+              </div>
+
+              <div class="rounded-xl bg-slate-900/60 px-2.5 py-1.5 text-right">
+                <div class="text-[9px] uppercase tracking-wider text-slate-600">Potential gain</div>
+                <div class="text-[11px] font-semibold"
+                     :class="$store.spine.futureGain() >= 0 ? 'text-emerald-300' : 'text-rose-300'"
+                     x-text="$store.spine.formatCompactMoney($store.spine.futureGain())"></div>
+              </div>
+            </div>
+
+            <div class="relative h-[calc(100%-48px)] min-h-[190px] w-full">
+              <canvas id="futureMeChart"></canvas>
+            </div>
+          </section>
+
+          <div class="shrink-0 px-2 text-center text-[9px] leading-4 text-slate-700">
+            Modellrechnung, keine Renditegarantie oder Anlageberatung.
+          </div>
+        </div>
+      </template>
+    </div>
+  </section>
+
+  <!-- BOTTOM SHEETS -->
+  <div x-show="$store.spine.ui.activeSheet !== null"
+       x-transition.opacity.duration.150ms
+       class="fixed inset-0 z-40"
+       style="display:none;">
+
+    <button type="button"
+      @click="$store.spine.closeSheet()"
+      class="sheet-backdrop absolute inset-0 h-full w-full cursor-default"
+      aria-label="Schließen"></button>
+
+    <div x-show="$store.spine.ui.activeSheet !== null"
+      x-transition:enter="transition ease-out duration-250"
+      x-transition:enter-start="translate-y-full"
+      x-transition:enter-end="translate-y-0"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="translate-y-0"
+      x-transition:leave-end="translate-y-full"
+      class="bottom-sheet absolute bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-md overflow-y-auto px-5 pt-3 pb-[max(24px,env(safe-area-inset-bottom))]">
+
+      <div class="mx-auto mb-5 h-1 w-10 rounded-full bg-slate-700"></div>
+
+      <!-- COST INPUT SHEET -->
+      <div x-show="$store.spine.ui.activeSheet === 'costInput'">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[.16em] text-indigo-300/60">Cost vs. Time</div>
+            <h3 class="mt-1 text-lg font-semibold tracking-tight">Kauf analysieren</h3>
+          </div>
+          <button type="button" @click="$store.spine.closeSheet()"
+            class="flex h-9 w-9 items-center justify-center rounded-2xl bg-slate-800 text-slate-400">
+            <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <div class="mt-5 overflow-hidden rounded-[22px] border border-white/5 bg-slate-800/55 px-4">
+          <label class="input-row">
+            <span class="w-[88px] shrink-0 text-xs font-medium text-slate-400">Produkt</span>
+            <input type="text"
+                   x-model="$store.spine.ui.costForm.product"
+                   @focus="$store.spine.revealInput($el)"
+                   placeholder="z. B. Kopfhörer"
+                   maxlength="70">
+          </label>
+
+          <label class="input-row">
+            <span class="w-[88px] shrink-0 text-xs font-medium text-slate-400">Preis</span>
+            <div class="flex min-w-0 flex-1 items-center gap-1">
+              <input type="number" inputmode="decimal" min="0" step="0.01"
+                     x-model="$store.spine.ui.costForm.price"
+                     @focus="$store.spine.revealInput($el)"
+                     placeholder="0,00">
+              <span class="text-sm text-slate-600">€</span>
+            </div>
+          </label>
+
+          <label class="input-row">
+            <span class="w-[88px] shrink-0 text-xs font-medium text-slate-400">Netto / h</span>
+            <div class="flex min-w-0 flex-1 items-center gap-1">
+              <input type="number" inputmode="decimal" min="0" step="0.01"
+                     x-model="$store.spine.ui.costForm.hourlyWage"
+                     @focus="$store.spine.revealInput($el)"
+                     placeholder="20,00">
+              <span class="text-sm text-slate-600">€</span>
+            </div>
+          </label>
+        </div>
+
+        <p x-show="$store.spine.ui.formError"
+           class="mt-3 text-xs text-rose-300"
+           x-text="$store.spine.ui.formError"></p>
+
+        <button type="button" @click="$store.spine.calculateCostTime()"
+          class="mt-5 w-full rounded-2xl bg-indigo-400 py-3.5 text-sm font-bold text-slate-950 active:scale-[.99]">
+          In Arbeitszeit übersetzen
+        </button>
+      </div>
+
+      <!-- IMPULSE SETUP -->
+      <div x-show="$store.spine.ui.activeSheet === 'impulseSetup'">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[.16em] text-rose-300/60">Impulse Timer</div>
+            <h3 class="mt-1 text-lg font-semibold tracking-tight">Warum willst du es gerade?</h3>
+          </div>
+          <button type="button" @click="$store.spine.closeSheet()"
+            class="flex h-9 w-9 items-center justify-center rounded-2xl bg-slate-800 text-slate-400">
+            <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <div class="mt-5 grid grid-cols-2 gap-2">
+          <template x-for="reason in $store.spine.impulseReasons" :key="reason.id">
+            <button type="button"
+              @click="$store.spine.ui.impulseSetup.reason = reason.id"
+              class="rounded-2xl border px-3 py-3 text-left transition active:scale-[.98]"
+              :class="$store.spine.ui.impulseSetup.reason === reason.id ? 'border-rose-300/30 bg-rose-400/10 text-rose-200' : 'border-white/5 bg-slate-800/50 text-slate-500'">
+              <div class="text-xs font-semibold" x-text="reason.label"></div>
+              <div class="mt-1 text-[9px] leading-3.5 opacity-70" x-text="reason.hint"></div>
+            </button>
+          </template>
+        </div>
+
+        <div class="mt-4">
+          <div class="mb-2 flex items-center justify-between">
+            <span class="text-xs font-medium text-slate-400">Wie stark willst du es jetzt?</span>
+            <span class="text-xs font-semibold text-rose-300"
+                  x-text="$store.spine.ui.impulseSetup.desire + '/5'"></span>
+          </div>
+          <div class="grid grid-cols-5 gap-2">
+            <template x-for="n in [1,2,3,4,5]" :key="n">
+              <button type="button"
+                @click="$store.spine.ui.impulseSetup.desire = n"
+                class="rounded-xl py-2.5 text-xs font-semibold"
+                :class="$store.spine.ui.impulseSetup.desire === n ? 'bg-rose-400 text-slate-950' : 'bg-slate-800 text-slate-500'"
+                x-text="n"></button>
+            </template>
+          </div>
+        </div>
+
+        <label class="mt-4 block rounded-[20px] border border-white/5 bg-slate-800/50 p-3">
+          <span class="text-[10px] font-medium text-slate-500">Optionaler Gedanke</span>
+          <input type="text" maxlength="120"
+                 x-model="$store.spine.ui.impulseSetup.note"
+                 @focus="$store.spine.revealInput($el)"
+                 placeholder="Was hoffst du, dass der Kauf dir gibt?"
+                 class="mt-2 !text-left text-xs">
+        </label>
+
+        <p x-show="$store.spine.ui.formError" class="mt-3 text-xs text-rose-300" x-text="$store.spine.ui.formError"></p>
+
+        <button type="button" @click="$store.spine.startImpulseWait()"
+          class="mt-5 w-full rounded-2xl bg-rose-300 py-3.5 text-sm font-bold text-slate-950 active:scale-[.99]">
+          48-Stunden-Pause starten
+        </button>
+      </div>
+
+      <!-- IMPULSE CHECK-IN -->
+      <div x-show="$store.spine.ui.activeSheet === 'impulseCheckin'">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[.16em] text-indigo-300/60">Impulse Check-in</div>
+            <h3 class="mt-1 text-lg font-semibold tracking-tight">Willst du es noch?</h3>
+          </div>
+          <button type="button" @click="$store.spine.closeSheet()"
+            class="flex h-9 w-9 items-center justify-center rounded-2xl bg-slate-800 text-slate-400">
+            <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <div class="mt-5 rounded-[22px] border border-indigo-400/10 bg-indigo-400/[.04] p-4"
+             x-show="$store.spine.activeImpulseItem()">
+          <div class="truncate text-sm font-semibold text-slate-200"
+               x-text="$store.spine.activeImpulseItem()?.product || ''"></div>
+          <div class="mt-1 text-[10px] text-slate-500">
+            <span x-text="$store.spine.formatMoney($store.spine.activeImpulseItem()?.price || 0)"></span>
+            · gestartet mit Wunschstärke
+            <span class="text-slate-300" x-text="($store.spine.activeImpulseItem()?.initialDesire || 3) + '/5'"></span>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <div class="mb-2 flex items-center justify-between">
+            <span class="text-xs font-medium text-slate-400">Wunschstärke jetzt</span>
+            <span class="text-xs font-semibold text-indigo-300"
+                  x-text="$store.spine.ui.impulseCheckin.desire + '/5'"></span>
+          </div>
+          <div class="grid grid-cols-5 gap-2">
+            <template x-for="n in [1,2,3,4,5]" :key="n">
+              <button type="button"
+                @click="$store.spine.ui.impulseCheckin.desire = n"
+                class="rounded-xl py-2.5 text-xs font-semibold"
+                :class="$store.spine.ui.impulseCheckin.desire === n ? 'bg-indigo-300 text-slate-950' : 'bg-slate-800 text-slate-500'"
+                x-text="n"></button>
+            </template>
+          </div>
+        </div>
+
+        <label class="mt-4 block rounded-[20px] border border-white/5 bg-slate-800/50 p-3">
+          <span class="text-[10px] font-medium text-slate-500">Was hat sich verändert?</span>
+          <input type="text" maxlength="120"
+                 x-model="$store.spine.ui.impulseCheckin.note"
+                 @focus="$store.spine.revealInput($el)"
+                 placeholder="z. B. brauche ich eigentlich nicht"
+                 class="mt-2 !text-left text-xs">
+        </label>
+
+        <button type="button" @click="$store.spine.saveImpulseCheckin()"
+          class="mt-5 w-full rounded-2xl bg-indigo-300 py-3.5 text-sm font-bold text-slate-950 active:scale-[.99]">
+          Check-in speichern
+        </button>
+      </div>
+
+      <!-- FUTURE ME SCENARIO -->
+      <div x-show="$store.spine.ui.activeSheet === 'futureScenario'">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[.16em] text-emerald-300/60">Future Me</div>
+            <h3 class="mt-1 text-lg font-semibold tracking-tight">Szenario einstellen</h3>
+          </div>
+          <button type="button" @click="$store.spine.closeSheet()"
+            class="flex h-9 w-9 items-center justify-center rounded-2xl bg-slate-800 text-slate-400">
+            <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <div class="mt-5 rounded-[22px] border border-emerald-400/10 bg-emerald-400/[.04] p-4">
+          <div class="text-[10px] uppercase tracking-wider text-slate-600">Ausgangsbetrag</div>
+          <div class="mt-1 text-2xl font-semibold text-emerald-300"
+               x-text="$store.spine.formatMoney($store.spine.data.stats.moneySaved)"></div>
+          <div class="mt-1 text-[10px] leading-4 text-slate-600">Dein aktuelles Money Saved wird als einmalige Anlage modelliert.</div>
+        </div>
+
+        <div class="mt-4 overflow-hidden rounded-[22px] border border-white/5 bg-slate-800/55 px-4">
+          <label class="input-row">
+            <span class="flex-1 text-xs font-medium text-slate-400">Zeitraum</span>
+            <div class="flex w-28 items-center gap-1">
+              <input type="number" inputmode="numeric" min="1" max="50" step="1"
+                     x-model="$store.spine.ui.futureForm.years">
+              <span class="text-xs text-slate-600">Jahre</span>
+            </div>
+          </label>
+
+          <label class="input-row">
+            <span class="flex-1 text-xs font-medium text-slate-400">Rendite p.a.</span>
+            <div class="flex w-28 items-center gap-1">
+              <input type="number" inputmode="decimal" min="-20" max="30" step="0.1"
+                     x-model="$store.spine.ui.futureForm.annualReturn">
+              <span class="text-xs text-slate-600">%</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="mt-3 grid grid-cols-3 gap-2">
+          <button type="button" @click="$store.spine.ui.futureForm.years = 5"
+            class="rounded-xl bg-slate-800 py-2 text-[10px] font-semibold text-slate-400">5 Jahre</button>
+          <button type="button" @click="$store.spine.ui.futureForm.years = 10"
+            class="rounded-xl bg-slate-800 py-2 text-[10px] font-semibold text-slate-400">10 Jahre</button>
+          <button type="button" @click="$store.spine.ui.futureForm.years = 20"
+            class="rounded-xl bg-slate-800 py-2 text-[10px] font-semibold text-slate-400">20 Jahre</button>
+        </div>
+
+        <div class="mt-2 grid grid-cols-3 gap-2">
+          <button type="button" @click="$store.spine.ui.futureForm.annualReturn = 4"
+            class="rounded-xl bg-slate-800 py-2 text-[10px] font-semibold text-slate-400">4%</button>
+          <button type="button" @click="$store.spine.ui.futureForm.annualReturn = 7"
+            class="rounded-xl bg-slate-800 py-2 text-[10px] font-semibold text-slate-400">7%</button>
+          <button type="button" @click="$store.spine.ui.futureForm.annualReturn = 10"
+            class="rounded-xl bg-slate-800 py-2 text-[10px] font-semibold text-slate-400">10%</button>
+        </div>
+
+        <p x-show="$store.spine.ui.formError" class="mt-3 text-xs text-rose-300" x-text="$store.spine.ui.formError"></p>
+
+        <button type="button" @click="$store.spine.saveFutureScenario()"
+          class="mt-5 w-full rounded-2xl bg-emerald-400 py-3.5 text-sm font-bold text-slate-950 active:scale-[.99]">
+          Szenario anwenden
+        </button>
+      </div>
+
+      <!-- SETTINGS -->
+      <div x-show="$store.spine.ui.activeSheet === 'settings'">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[.18em] text-slate-600">Morrow Money</div>
+            <h3 class="mt-1 text-lg font-semibold tracking-tight">Settings</h3>
+          </div>
+          <button type="button" @click="$store.spine.closeSheet()"
+            class="flex h-9 w-9 items-center justify-center rounded-2xl bg-slate-800 text-slate-400">
+            <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <div class="mt-5 overflow-hidden rounded-[22px] border border-white/5 bg-slate-800/55 px-4">
+          <label class="input-row">
+            <span class="flex-1 text-xs font-medium text-slate-400">Standard Netto / h</span>
+            <div class="flex w-28 items-center gap-1">
+              <input type="number" inputmode="decimal" min="0" step="0.01"
+                     x-model="$store.spine.data.profile.hourlyWage"
+                     @focus="$store.spine.revealInput($el)"
+                     @change="$store.spine.persist()">
+              <span class="text-sm text-slate-600">€</span>
+            </div>
+          </label>
+
+          <div class="input-row">
+            <div class="flex-1">
+              <div class="text-xs font-medium text-slate-400">Storage</div>
+              <div class="mt-.5 text-[10px] text-slate-600">Nur lokal auf diesem Gerät</div>
+            </div>
+            <span class="rounded-xl bg-slate-900 px-2.5 py-1.5 text-[10px] font-semibold text-slate-500"
+                  x-text="'Schema v' + $store.spine.data.version"></span>
+          </div>
+        </div>
+
+        <div class="mt-4 rounded-[22px] border border-white/5 bg-slate-800/55 p-4">
+          <div class="flex items-start gap-3">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-indigo-400/10 text-indigo-300">
+              <i data-lucide="database-backup" class="h-4 w-4"></i>
+            </span>
+            <div class="min-w-0">
+              <div class="text-sm font-semibold text-slate-200">Daten-Backup</div>
+              <p class="mt-1 text-[10px] leading-4 text-slate-500">
+                Sichere alle lokalen Morrow-Money-Daten als JSON-Datei und stelle sie auf diesem oder einem neuen Gerät wieder her.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-4 space-y-2">
+            <button type="button"
+              @click="$store.spine.exportBackup()"
+              class="flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-700/80 px-4 py-3 text-xs font-semibold text-white active:scale-[.99]">
+              <i data-lucide="download" class="h-4 w-4"></i>
+              Backup herunterladen
+            </button>
+
+            <div class="relative">
+              <input
+                type="file"
+                accept=".json,application/json"
+                @change="$store.spine.importBackup($event)"
+                class="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
+                title="Backup-Datei auswählen"
+              />
+              <button type="button"
+                class="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-transparent px-4 py-3 text-xs font-semibold text-slate-300 active:scale-[.99]">
+                <i data-lucide="upload" class="h-4 w-4"></i>
+                Backup wiederherstellen
+              </button>
+            </div>
+          </div>
+
+          <div x-show="$store.spine.ui.backupMessage"
+               class="mt-3 rounded-xl px-3 py-2 text-[10px] leading-4"
+               :class="$store.spine.ui.backupStatus === 'error'
+                 ? 'bg-rose-400/[.08] text-rose-300'
+                 : 'bg-emerald-400/[.08] text-emerald-300'"
+               x-text="$store.spine.ui.backupMessage"></div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="mt-4 rounded-[22px] border border-rose-500/20 bg-rose-500/[.035] p-4">
+          <div class="flex items-start gap-3">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-400">
+              <i data-lucide="triangle-alert" class="h-4 w-4"></i>
+            </span>
+
+            <div class="min-w-0">
+              <div class="text-sm font-semibold text-rose-300">Gefahrenzone</div>
+              <p class="mt-1 text-[10px] leading-4 text-slate-500">
+                Löscht alle lokalen Morrow-Money-Daten auf diesem Gerät. Ohne vorheriges Backup kann dies nicht rückgängig gemacht werden.
+              </p>
+            </div>
+          </div>
+
+          <button type="button"
+            @click="$store.spine.resetData()"
+            class="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl border border-rose-500/20 bg-rose-500/[.08] px-4 py-3 text-xs font-semibold text-rose-300 active:scale-[.99]">
+            <i data-lucide="trash-2" class="h-4 w-4"></i>
+            Alle Daten löschen
+          </button>
+        </div>
+
+        <!-- Privacy -->
+        <div class="mt-5 px-3 pb-2 text-center">
+          <i data-lucide="shield-check" class="mx-auto h-7 w-7 text-slate-700"></i>
+          <div class="mt-2 text-[10px] font-semibold text-slate-500">100% privat & lokal</div>
+          <p class="mx-auto mt-1 max-w-[280px] text-[9px] leading-4 text-slate-700">
+            Deine Einträge werden lokal in diesem Browser gespeichert. Morrow Money sendet deine Finanz- und Kaufdaten nicht an einen eigenen Server oder eine eigene Cloud.
+          </p>
+
+          <button
+            type="button"
+            @click="$store.spine.ui.activeSheet = null; $store.spine.ui.onboardingStep = 1; $store.spine.ui.showOnboarding = true; $store.spine.refreshIcons()"
+            class="mt-3 text-[9px] font-medium text-slate-600 underline decoration-slate-700 underline-offset-2"
+          >
+            Einführung erneut anzeigen
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </main>
+
 <script>
-function app(){return{product:'',price:'',wage:Alpine.$persist(20).as('shouldibuyit_wage'),lang:Alpine.$persist('en').as('shouldibuyit_lang'),translations:{en:{eyebrow:'Purchase reality check',title1:'Should I ',title2:'buy it?',subtitle:'See what a purchase really costs — measured in your working time.',productLabel:'Product',productPlaceholder:'e.g. AirPods Pro',priceLabel:'Price',pricePlaceholder:'0.00',wageLabel:'Net hourly wage',perHour:'per hour',resultEyebrow:'Real cost',resultSubtitle:'Your time to afford it',emptyTitle1:'Enter details to ',emptyTitle2:'see the real cost.',emptyDescription:'Your purchase will be translated into hours and minutes of work.',costsYou:' costs you ',thisPurchaseCosts:'This purchase costs you ',workingTimeSuffix:' of working time.',beforeBuy:'Before you buy',askWorth:'Ask yourself whether this is worth ',ofYourLife:' of your life.',workHour:'work hour',workHours:'work hours',workDay:'work day',workDays:'work days',share:'Share result',footer:"Money is replaceable. Time isn't."},de:{eyebrow:'Kauf-Realitätscheck',title1:'Soll ich es ',title2:'kaufen?',subtitle:'Sieh, was ein Kauf wirklich kostet — gemessen in deiner Arbeitszeit.',productLabel:'Produkt',productPlaceholder:'z. B. AirPods Pro',priceLabel:'Preis',pricePlaceholder:'0,00',wageLabel:'Netto-Stundenlohn',perHour:'pro Stunde',resultEyebrow:'Echter Preis',resultSubtitle:'Deine Arbeitszeit dafür',emptyTitle1:'Gib die Daten ein und ',emptyTitle2:'sieh den echten Preis.',emptyDescription:'Der Kaufpreis wird in Stunden und Minuten deiner Arbeitszeit übersetzt.',costsYou:' kostet dich ',thisPurchaseCosts:'Dieser Kauf kostet dich ',workingTimeSuffix:' Arbeitszeit.',beforeBuy:'Bevor du kaufst',askWorth:'Frag dich, ob dir dieser Kauf ',ofYourLife:' deines Lebens wert ist.',workHour:'Arbeitsstunde',workHours:'Arbeitsstunden',workDay:'Arbeitstag',workDays:'Arbeitstage',share:'Ergebnis teilen',footer:'Geld ist ersetzbar. Zeit nicht.'}},t(k){return this.translations[this.lang][k]||k},get currencySymbol(){return this.lang==='de'?'€':'$'},get currencyCode(){return this.lang==='de'?'EUR':'USD'},get locale(){return this.lang==='de'?'de-DE':'en-US'},get valid(){const p=Number(this.price),w=Number(this.wage);return Number.isFinite(p)&&Number.isFinite(w)&&p>0&&w>0},get rawHours(){return this.valid?Number(this.price)/Number(this.wage):0},get totalMinutes(){return this.valid?Math.round(this.rawHours*60):0},get hours(){return Math.floor(this.totalMinutes/60)},get minutes(){return this.totalMinutes%60},get formattedTime(){if(!this.valid)return'';if(this.hours===0)return`${this.minutes}m`;if(this.minutes===0)return`${this.hours}h`;return`${this.hours}h ${this.minutes}m`},get workDays(){return this.valid?this.rawHours/8:0},get formattedDays(){if(!this.valid)return'';const d=this.workDays;if(d<1){const h=Math.round(this.rawHours*10)/10;return`${h.toLocaleString(this.locale,{maximumFractionDigits:1})} ${Math.abs(h-1)<.001?this.t('workHour'):this.t('workHours')}`}const r=d>=10?Math.round(d):Math.round(d*10)/10;return`${r.toLocaleString(this.locale,{maximumFractionDigits:1})} ${Math.abs(r-1)<.001?this.t('workDay'):this.t('workDays')}`},get priceFormatted(){if(!this.valid)return'';return new Intl.NumberFormat(this.locale,{style:'currency',currency:this.currencyCode,maximumFractionDigits:2}).format(Number(this.price))},async shareResult(){if(!this.valid)return;const name=this.product.trim()||(this.lang==='de'?'Dieser Kauf':'This purchase');const text=this.lang==='de'?`${name} kostet mich ${this.formattedTime} meines Lebens. Berechne deine Käufe: ${location.href}`:`The ${name} costs me ${this.formattedTime} of my life. Calculate your purchases: ${location.href}`;try{if(navigator.share){await navigator.share({title:'Should I Buy It?',text,url:location.href});return}await navigator.clipboard.writeText(text)}catch(e){if(e?.name!=='AbortError'){try{await navigator.clipboard.writeText(text)}catch(_){}}}}}}
+document.addEventListener("alpine:init", () => {
+  Alpine.store("spine", {
+    STORAGE_KEY: "morrow-money",
+    CURRENT_VERSION: 4,
 
-// PWA Auto-Update & Service Worker Lifecycle
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async () => {
-    try {
-      const registration = await navigator.serviceWorker.register('./sw.js', {
-        updateViaCache: 'none'
+    data: {
+      version: 4,
+      settings: {
+        currency: "EUR",
+        locale: "de-DE"
+      },
+      profile: {
+        hourlyWage: 20
+      },
+      stats: {
+        moneySaved: 0,
+        skippedCount: 0,
+        boughtCount: 0
+      },
+      costTime: {
+        history: []
+      },
+      impulseTimer: {
+        items: []
+      },
+      graveyard: {
+        items: []
+      },
+      futureMe: {
+        annualReturn: 7,
+        years: 10,
+        scenarios: []
+      }
+    },
+
+    ui: {
+      currentView: "dashboard",
+      activeSheet: null,
+      formError: "",
+      costResult: null,
+      costForm: {
+        product: "",
+        price: "",
+        hourlyWage: ""
+      },
+      futureForm: {
+        years: 10,
+        annualReturn: 7
+      },
+      now: Date.now(),
+      impulseSetup: {
+        reason: "",
+        desire: 4,
+        note: ""
+      },
+      impulseCheckin: {
+        itemId: null,
+        desire: 3,
+        note: ""
+      },
+      backupStatus: "",
+      backupMessage: "",
+      showOnboarding: false,
+      onboardingStep: 1,
+      storageWarning: false
+    },
+
+    futureChart: null,
+    clockTimer: null,
+
+    impulseReasons: [
+      { id: "reward", label: "Belohnung", hint: "Ich habe es mir verdient." },
+      { id: "boredom", label: "Langeweile", hint: "Ich will gerade einen Kick." },
+      { id: "stress", label: "Stress", hint: "Der Kauf fühlt sich wie Entlastung an." },
+      { id: "fomo", label: "FOMO", hint: "Angebot, Trend oder Angst etwas zu verpassen." },
+      { id: "upgrade", label: "Upgrade", hint: "Etwas Neues fühlt sich besser an." },
+      { id: "need", label: "Echter Bedarf", hint: "Ich glaube, ich brauche es wirklich." }
+    ],
+
+    init() {
+      this.load();
+
+      Alpine.effect(() => {
+        JSON.stringify(this.data);
+        this.persist();
       });
-      await registration.update();
-    } catch (err) {
-      console.warn('Service Worker registration failed:', err);
+
+      this.clockTimer = setInterval(() => {
+        this.ui.now = Date.now();
+        this.checkDueNotifications();
+      }, 30000);
+
+      this.ui.now = Date.now();
+      this.checkDueNotifications();
+      this.initOnboarding();
+
+      queueMicrotask(() => this.refreshIcons());
+    },
+
+    load() {
+      try {
+        const raw = localStorage.getItem(this.STORAGE_KEY);
+        if (!raw) return;
+
+        const stored = JSON.parse(raw);
+        if (!stored || typeof stored !== "object") throw new Error("Invalid storage structure");
+
+        const migrated = this.migrate(stored);
+        this.data = this.deepMerge(this.data, migrated);
+      } catch (error) {
+        console.error("[Morrow Money] Load failed:", error);
+        this.ui.storageWarning = true;
+      }
+    },
+
+    persist() {
+      try {
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.data));
+        this.ui.storageWarning = false;
+      } catch (error) {
+        console.error("[Morrow Money] Persist failed:", error);
+        this.ui.storageWarning = true;
+      }
+    },
+
+    migrate(storedData) {
+      const data = JSON.parse(JSON.stringify(storedData));
+      let version = Number(data.version) || 1;
+
+      if (version === 1) {
+        data.stats = {
+          moneySaved: Number(data.stats?.moneySaved) || 0,
+          skippedCount: Number(data.stats?.skippedCount) || 0,
+          boughtCount: Number(data.stats?.boughtCount) || 0
+        };
+
+        data.profile = data.profile || {};
+        if (!Number(data.profile.hourlyWage)) data.profile.hourlyWage = 20;
+
+        data.impulseTimer = data.impulseTimer || { items: [] };
+        data.graveyard = data.graveyard || { items: [] };
+        data.costTime = data.costTime || { history: [] };
+
+        version = 2;
+      }
+
+      if (version === 2) {
+        data.futureMe = data.futureMe || {};
+        data.futureMe.annualReturn = Number(data.futureMe.annualReturn) || 7;
+        data.futureMe.years = Number(data.futureMe.years) || 10;
+        data.futureMe.scenarios = Array.isArray(data.futureMe.scenarios) ? data.futureMe.scenarios : [];
+        version = 3;
+      }
+
+      if (version === 3) {
+        data.impulseTimer = data.impulseTimer || { items: [] };
+        data.impulseTimer.items = Array.isArray(data.impulseTimer.items)
+          ? data.impulseTimer.items.map(item => ({
+              ...item,
+              startedAt: item.startedAt || item.createdAt || new Date().toISOString(),
+              reason: item.reason || "need",
+              initialDesire: Number(item.initialDesire) || 3,
+              note: item.note || "",
+              checkIns: Array.isArray(item.checkIns) ? item.checkIns : [],
+              reminder: Boolean(item.reminder),
+              notified: Boolean(item.notified)
+            }))
+          : [];
+        version = 4;
+      }
+
+      data.version = Math.min(version, this.CURRENT_VERSION);
+      return data;
+    },
+
+    deepMerge(defaults, stored) {
+      if (typeof defaults !== "object" || defaults === null) return stored ?? defaults;
+      if (Array.isArray(defaults)) return Array.isArray(stored) ? stored : defaults;
+
+      const output = { ...defaults };
+      if (typeof stored !== "object" || stored === null) return output;
+
+      for (const key of Object.keys(stored)) {
+        if (
+          key in defaults &&
+          typeof defaults[key] === "object" &&
+          defaults[key] !== null &&
+          !Array.isArray(defaults[key])
+        ) {
+          output[key] = this.deepMerge(defaults[key], stored[key]);
+        } else {
+          output[key] = stored[key];
+        }
+      }
+      return output;
+    },
+
+    initOnboarding() {
+      try {
+        const done = localStorage.getItem("sibi_onboarding_done");
+        this.ui.showOnboarding = done !== "true";
+        this.ui.onboardingStep = 1;
+      } catch (_) {
+        this.ui.storageWarning = true;
+        this.ui.showOnboarding = true;
+        this.ui.onboardingStep = 1;
+      }
+
+      requestAnimationFrame(() => this.refreshIcons());
+    },
+
+    nextOnboardingStep() {
+      if (this.ui.onboardingStep < 3) {
+        this.ui.onboardingStep += 1;
+        requestAnimationFrame(() => this.refreshIcons());
+        return;
+      }
+
+      this.finishOnboarding();
+    },
+
+    finishOnboarding() {
+      this.ui.showOnboarding = false;
+
+      try {
+        localStorage.setItem("sibi_onboarding_done", "true");
+      } catch (_) {
+        this.ui.storageWarning = true;
+      }
+
+      requestAnimationFrame(() => this.refreshIcons());
+    },
+
+    setView(view) {
+      const allowed = ["dashboard", "costTime", "impulseTimer", "graveyard", "futureMe"];
+      if (!allowed.includes(view)) return;
+
+      this.ui.activeSheet = null;
+      this.ui.currentView = view;
+
+      requestAnimationFrame(() => {
+        this.refreshIcons();
+        if (view === "futureMe") {
+          setTimeout(() => this.renderFutureChart(), 40);
+        }
+      });
+    },
+
+    goHome() {
+      this.setView("dashboard");
+    },
+
+    openSheet(name) {
+      this.ui.activeSheet = name;
+      requestAnimationFrame(() => this.refreshIcons());
+    },
+
+    closeSheet() {
+      this.ui.activeSheet = null;
+      this.ui.formError = "";
+    },
+
+    openCostSheet() {
+      this.ui.formError = "";
+      this.ui.costForm = {
+        product: this.ui.costResult?.product || "",
+        price: this.ui.costResult?.price || "",
+        hourlyWage: Number(this.data.profile.hourlyWage) || 20
+      };
+      this.openSheet("costInput");
+    },
+
+    openFutureSheet() {
+      this.ui.formError = "";
+      this.ui.futureForm = {
+        years: Number(this.data.futureMe.years) || 10,
+        annualReturn: Number(this.data.futureMe.annualReturn)
+      };
+      this.openSheet("futureScenario");
+    },
+
+    saveFutureScenario() {
+      const years = Math.round(Number(this.ui.futureForm.years));
+      const annualReturn = Number(this.ui.futureForm.annualReturn);
+
+      if (!Number.isFinite(years) || years < 1 || years > 50) {
+        this.ui.formError = "Bitte wähle einen Zeitraum zwischen 1 und 50 Jahren.";
+        return;
+      }
+
+      if (!Number.isFinite(annualReturn) || annualReturn < -20 || annualReturn > 30) {
+        this.ui.formError = "Bitte wähle eine Rendite zwischen -20 % und 30 %.";
+        return;
+      }
+
+      this.data.futureMe.years = years;
+      this.data.futureMe.annualReturn = annualReturn;
+
+      this.data.futureMe.scenarios.unshift({
+        id: this.id(),
+        principal: Number(this.data.stats.moneySaved) || 0,
+        years,
+        annualReturn,
+        futureValue: this.compoundValue(Number(this.data.stats.moneySaved) || 0, annualReturn, years),
+        createdAt: new Date().toISOString()
+      });
+      this.data.futureMe.scenarios = this.data.futureMe.scenarios.slice(0, 20);
+
+      this.persist();
+      this.closeSheet();
+      setTimeout(() => this.renderFutureChart(), 40);
+    },
+
+    compoundValue(principal, annualReturn, years) {
+      const p = Math.max(0, Number(principal) || 0);
+      const r = (Number(annualReturn) || 0) / 100;
+      const y = Math.max(0, Number(years) || 0);
+      return p * Math.pow(1 + r, y);
+    },
+
+    futureValue() {
+      return this.compoundValue(
+        this.data.stats.moneySaved,
+        this.data.futureMe.annualReturn,
+        this.data.futureMe.years
+      );
+    },
+
+    futureGain() {
+      return this.futureValue() - (Number(this.data.stats.moneySaved) || 0);
+    },
+
+    futureProjection() {
+      const principal = Math.max(0, Number(this.data.stats.moneySaved) || 0);
+      const years = Math.max(1, Math.round(Number(this.data.futureMe.years) || 10));
+      const rate = Number(this.data.futureMe.annualReturn) || 0;
+      const labels = [];
+      const values = [];
+
+      for (let year = 0; year <= years; year++) {
+        labels.push(year === 0 ? "Heute" : String(year));
+        values.push(Math.round(this.compoundValue(principal, rate, year) * 100) / 100);
+      }
+
+      return { labels, values };
+    },
+
+    renderFutureChart() {
+      if (this.ui.currentView !== "futureMe") return;
+
+      requestAnimationFrame(() => {
+        const totalSaved = Number(this.data.stats.moneySaved) || 0;
+
+        if (totalSaved <= 0) {
+          if (this.futureChart) {
+            this.futureChart.destroy();
+            this.futureChart = null;
+          }
+          this.refreshIcons();
+          return;
+        }
+
+        const canvas = document.getElementById("futureMeChart");
+        if (!canvas || !window.Chart) return;
+
+        if (this.futureChart) {
+          this.futureChart.destroy();
+          this.futureChart = null;
+        }
+
+        const years = Math.max(1, Math.min(50, Math.round(Number(this.data.futureMe.years) || 10)));
+        const annualReturnPct = Math.max(-99, Math.min(100, Number(this.data.futureMe.annualReturn) || 0));
+        const annualReturn = annualReturnPct / 100;
+
+        const labels = Array.from({ length: years + 1 }, (_, i) => i);
+        const dataPoints = labels.map((year) => {
+          const value = totalSaved * Math.pow(1 + annualReturn, year);
+          return Number.isFinite(value) ? value : 0;
+        });
+
+        const compactAxis = (value) => {
+          const n = Number(value) || 0;
+          const abs = Math.abs(n);
+
+          if (abs >= 1_000_000_000) return (n / 1_000_000_000).toFixed(1).replace(".0", "") + "B €";
+          if (abs >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(".0", "") + "M €";
+          if (abs >= 1_000) return (n / 1_000).toFixed(abs >= 100_000 ? 0 : 1).replace(".0", "") + "k €";
+          return Math.round(n) + " €";
+        };
+
+        this.futureChart = new Chart(canvas, {
+          type: "line",
+          data: {
+            labels,
+            datasets: [{
+              label: "Future value",
+              data: dataPoints,
+              borderColor: "#34d399",
+              backgroundColor: "rgba(52, 211, 153, 0.08)",
+              borderWidth: 2,
+              pointRadius: 0,
+              pointHoverRadius: 4,
+              pointHitRadius: 18,
+              fill: true,
+              tension: 0.35
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 320 },
+            interaction: { mode: "index", intersect: false },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: "#1e293b",
+                titleColor: "#94a3b8",
+                bodyColor: "#f8fafc",
+                borderColor: "rgba(255,255,255,.08)",
+                borderWidth: 1,
+                padding: 10,
+                displayColors: false,
+                callbacks: {
+                  title: (items) => {
+                    const year = Number(items?.[0]?.label ?? 0);
+                    return year === 0 ? "Heute" : `Jahr ${year}`;
+                  },
+                  label: (context) => this.formatMoney(context.raw)
+                }
+              }
+            },
+            scales: {
+              x: {
+                border: { display: false },
+                grid: { display: false },
+                ticks: {
+                  color: "#64748b",
+                  maxTicksLimit: years >= 30 ? 5 : 6,
+                  maxRotation: 0,
+                  autoSkip: true,
+                  callback: function(value) {
+                    const label = Number(this.getLabelForValue(value));
+                    return label === 0 ? "Heute" : `${label}y`;
+                  },
+                  font: { size: 10 }
+                }
+              },
+              y: {
+                beginAtZero: annualReturnPct < 0,
+                border: { display: false },
+                grid: {
+                  color: "rgba(255,255,255,.045)",
+                  drawTicks: false
+                },
+                ticks: {
+                  color: "#64748b",
+                  maxTicksLimit: 5,
+                  padding: 8,
+                  callback: compactAxis,
+                  font: { size: 10 }
+                }
+              }
+            }
+          }
+        });
+
+        this.refreshIcons();
+      });
+    },
+
+    calculateCostTime() {
+      const product = String(this.ui.costForm.product || "").trim();
+      const price = Number(this.ui.costForm.price);
+      const hourlyWage = Number(this.ui.costForm.hourlyWage);
+
+      if (!product) {
+        this.ui.formError = "Bitte gib ein Produkt ein.";
+        return;
+      }
+      if (!Number.isFinite(price) || price <= 0) {
+        this.ui.formError = "Bitte gib einen gültigen Preis ein.";
+        return;
+      }
+      if (!Number.isFinite(hourlyWage) || hourlyWage <= 0) {
+        this.ui.formError = "Bitte gib deinen Netto-Stundenlohn ein.";
+        return;
+      }
+
+      const hours = price / hourlyWage;
+      const minutes = Math.round(hours * 60);
+
+      this.data.profile.hourlyWage = hourlyWage;
+
+      this.ui.costResult = {
+        id: this.id(),
+        product,
+        price,
+        hourlyWage,
+        hours,
+        minutes,
+        createdAt: new Date().toISOString()
+      };
+
+      this.data.costTime.history.unshift({
+        ...this.ui.costResult,
+        decision: "open"
+      });
+
+      this.data.costTime.history = this.data.costTime.history.slice(0, 100);
+      this.persist();
+      this.closeSheet();
+      this.refreshIcons();
+    },
+
+    decideBuy() {
+      const result = this.ui.costResult;
+      if (!result) return;
+
+      this.data.stats.boughtCount += 1;
+      this.updateHistoryDecision(result.id, "bought");
+      this.ui.costResult = null;
+      this.persist();
+      this.goHome();
+    },
+
+    decideWait() {
+      const result = this.ui.costResult;
+      if (!result) return;
+
+      this.ui.formError = "";
+      this.ui.impulseSetup = {
+        reason: "",
+        desire: 4,
+        note: ""
+      };
+      this.openSheet("impulseSetup");
+    },
+
+    startImpulseWait() {
+      const result = this.ui.costResult;
+      if (!result) return;
+
+      if (!this.ui.impulseSetup.reason) {
+        this.ui.formError = "Wähle kurz aus, was hinter dem Impuls steckt.";
+        return;
+      }
+
+      const startedAt = new Date().toISOString();
+      const expiresAt = new Date(Date.now() + (48 * 60 * 60 * 1000)).toISOString();
+
+      this.data.impulseTimer.items.unshift({
+        ...result,
+        startedAt,
+        expiresAt,
+        status: "waiting",
+        reason: this.ui.impulseSetup.reason,
+        initialDesire: Number(this.ui.impulseSetup.desire) || 3,
+        note: String(this.ui.impulseSetup.note || "").trim(),
+        checkIns: [],
+        reminder: false,
+        notified: false
+      });
+
+      this.updateHistoryDecision(result.id, "waiting");
+      this.ui.costResult = null;
+      this.persist();
+      this.closeSheet();
+      this.setView("impulseTimer");
+    },
+
+    decideSkip() {
+      const result = this.ui.costResult;
+      if (!result) return;
+
+      this.commitSkip(result);
+      this.ui.costResult = null;
+      this.persist();
+      this.goHome();
+    },
+
+    commitSkip(item) {
+      this.data.stats.moneySaved += Number(item.price) || 0;
+      this.data.stats.skippedCount += 1;
+
+      this.data.graveyard.items.unshift({
+        id: item.id || this.id(),
+        product: item.product,
+        price: Number(item.price) || 0,
+        hourlyWage: Number(item.hourlyWage) || 0,
+        hours: Number(item.hours) || 0,
+        minutes: Number(item.minutes) || 0,
+        reason: item.reason || null,
+        initialDesire: Number(item.initialDesire) || null,
+        finalDesire: this.currentDesire(item),
+        checkIns: Array.isArray(item.checkIns) ? item.checkIns : [],
+        createdAt: new Date().toISOString()
+      });
+
+      this.data.graveyard.items = this.data.graveyard.items.slice(0, 200);
+      this.updateHistoryDecision(item.id, "skipped");
+    },
+
+    timerBuy(id) {
+      const index = this.data.impulseTimer.items.findIndex(item => item.id === id);
+      if (index < 0) return;
+
+      const [item] = this.data.impulseTimer.items.splice(index, 1);
+      this.data.stats.boughtCount += 1;
+      this.updateHistoryDecision(item.id, "bought_after_wait");
+      this.persist();
+    },
+
+    timerSkip(id) {
+      const index = this.data.impulseTimer.items.findIndex(item => item.id === id);
+      if (index < 0) return;
+
+      const [item] = this.data.impulseTimer.items.splice(index, 1);
+      this.commitSkip(item);
+      this.persist();
+      this.refreshIcons();
+    },
+
+    openImpulseCheckin(id) {
+      const item = this.data.impulseTimer.items.find(entry => entry.id === id);
+      if (!item) return;
+
+      this.ui.impulseCheckin = {
+        itemId: id,
+        desire: this.currentDesire(item),
+        note: ""
+      };
+      this.openSheet("impulseCheckin");
+    },
+
+    activeImpulseItem() {
+      return this.data.impulseTimer.items.find(
+        item => item.id === this.ui.impulseCheckin.itemId
+      ) || null;
+    },
+
+    saveImpulseCheckin() {
+      const item = this.activeImpulseItem();
+      if (!item) {
+        this.closeSheet();
+        return;
+      }
+
+      if (!Array.isArray(item.checkIns)) item.checkIns = [];
+
+      item.checkIns.push({
+        at: new Date().toISOString(),
+        desire: Number(this.ui.impulseCheckin.desire) || 3,
+        note: String(this.ui.impulseCheckin.note || "").trim()
+      });
+
+      this.persist();
+      this.closeSheet();
+      this.refreshIcons();
+    },
+
+    currentDesire(item) {
+      if (!item) return 3;
+      const checkIns = Array.isArray(item.checkIns) ? item.checkIns : [];
+      if (checkIns.length) {
+        return Number(checkIns[checkIns.length - 1].desire) || 3;
+      }
+      return Number(item.initialDesire) || 3;
+    },
+
+    impulseReasonLabel(reason) {
+      return this.impulseReasons.find(item => item.id === reason)?.label || "Impuls";
+    },
+
+    isImpulseReady(item) {
+      this.ui.now;
+      return this.ui.now >= new Date(item.expiresAt).getTime();
+    },
+
+    impulseProgress(item) {
+      this.ui.now;
+      const start = new Date(item.startedAt || item.createdAt).getTime();
+      const end = new Date(item.expiresAt).getTime();
+      if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return 100;
+      return Math.max(0, Math.min(100, ((this.ui.now - start) / (end - start)) * 100));
+    },
+
+    async toggleReminder(id) {
+      const item = this.data.impulseTimer.items.find(entry => entry.id === id);
+      if (!item) return;
+
+      if (item.reminder) {
+        item.reminder = false;
+        this.persist();
+        return;
+      }
+
+      if (!("Notification" in window)) {
+        item.reminder = true;
+        this.persist();
+        return;
+      }
+
+      let permission = Notification.permission;
+      if (permission === "default") {
+        try {
+          permission = await Notification.requestPermission();
+        } catch (_) {}
+      }
+
+      item.reminder = permission !== "denied";
+      this.persist();
+    },
+
+    checkDueNotifications() {
+      if (!("Notification" in window) || Notification.permission !== "granted") return;
+
+      const now = Date.now();
+
+      this.data.impulseTimer.items.forEach(item => {
+        if (
+          item.reminder &&
+          !item.notified &&
+          now >= new Date(item.expiresAt).getTime()
+        ) {
+          try {
+            new Notification("Morrow Money", {
+              body: `${item.product}: Deine 48-Stunden-Pause ist vorbei. Willst du es noch?`
+            });
+            item.notified = true;
+          } catch (_) {}
+        }
+      });
+
+      this.persist();
+    },
+
+    addImpulseToCalendar(item) {
+      if (!item || !item.expiresAt) return;
+
+      const dueDate = new Date(item.expiresAt);
+      if (Number.isNaN(dueDate.getTime())) return;
+
+      const endDate = new Date(dueDate.getTime() + 60 * 60 * 1000);
+      const now = new Date();
+
+      const formatICSDate = (date) => {
+        return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+      };
+
+      const escapeICS = (value) => {
+        return String(value || "")
+          .replace(/\\/g, "\\\\")
+          .replace(/\n/g, "\\n")
+          .replace(/,/g, "\\,")
+          .replace(/;/g, "\\;");
+      };
+
+      const safeName = String(item.product || "Kauf")
+        .trim()
+        .replace(/[^\p{L}\p{N}\-_ ]/gu, "")
+        .replace(/\s+/g, "-")
+        .slice(0, 60) || "Kauf";
+
+      const summary = `Wartezeit vorbei: ${item.product || "Kauf"}`;
+      const description =
+        `Deine Wartezeit für "${item.product || "diesen Kauf"}" ist vorbei.\\n\\n` +
+        `Öffne Morrow Money und entscheide bewusst: Buy oder Release.`;
+
+      const uid = `${item.id || Date.now()}@morrow-money.local`;
+
+      const lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Morrow Tools//Morrow Money//DE",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+        "BEGIN:VEVENT",
+        `UID:${escapeICS(uid)}`,
+        `DTSTAMP:${formatICSDate(now)}`,
+        `DTSTART:${formatICSDate(dueDate)}`,
+        `DTEND:${formatICSDate(endDate)}`,
+        `SUMMARY:${escapeICS(summary)}`,
+        `DESCRIPTION:${escapeICS(description)}`,
+        "BEGIN:VALARM",
+        "TRIGGER:PT0M",
+        "ACTION:DISPLAY",
+        `DESCRIPTION:${escapeICS(summary)}`,
+        "END:VALARM",
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ];
+
+      const blob = new Blob([lines.join("\\r\\n")], {
+        type: "text/calendar;charset=utf-8"
+      });
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = `morrow-money-${safeName}.ics`;
+      link.style.display = "none";
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    },
+
+    updateHistoryDecision(id, decision) {
+      const item = this.data.costTime.history.find(entry => entry.id === id);
+      if (item) item.decision = decision;
+    },
+
+    reflectionPrompt(hours) {
+      const h = Number(hours) || 0;
+      if (h < 1) return "Würdest du dafür auch heute bewusst eine Stunde deiner freien Zeit eintauschen?";
+      if (h < 4) return "Ist dir dieser Kauf mehrere Stunden deines Arbeitstages wert – auch morgen noch?";
+      if (h < 8) return "Wäre dir dieses Produkt fast einen ganzen Arbeitstag wert, wenn du die Zeit direkt dafür geben müsstest?";
+      return "Wenn der Preis in ganzen Arbeitstagen vor dir liegt: fühlt sich der Nutzen noch genauso groß an?";
+    },
+
+    costWeightLabel(hours) {
+      const h = Number(hours) || 0;
+      if (h < 1) return "Light";
+      if (h < 4) return "Noticeable";
+      if (h < 8) return "Significant";
+      return "Heavy";
+    },
+
+    waitLabel(expiresAt) {
+      this.ui.now;
+      const diff = new Date(expiresAt).getTime() - this.ui.now;
+      if (diff <= 0) return "Ready";
+
+      const totalMinutes = Math.ceil(diff / 60000);
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+
+      if (hours >= 24) {
+        const days = Math.floor(hours / 24);
+        const rest = hours % 24;
+        return `${days}d ${rest}h`;
+      }
+
+      if (hours > 0) return `${hours}h ${minutes}m`;
+      return `${minutes}m`;
+    },
+
+    exportBackup() {
+      const payload = {
+        app: "Morrow Money",
+        appId: "morrow-money",
+        backupVersion: 1,
+        schemaVersion: Number(this.data.version) || this.CURRENT_VERSION,
+        exportedAt: new Date().toISOString(),
+        data: JSON.parse(JSON.stringify(this.data))
+      };
+
+      try {
+        const blob = new Blob(
+          [JSON.stringify(payload, null, 2)],
+          { type: "application/json;charset=utf-8" }
+        );
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        const date = new Date().toISOString().slice(0, 10);
+
+        link.href = url;
+        link.download = `morrow-money-backup-${date}.json`;
+        link.style.display = "none";
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => URL.revokeObjectURL(url), 0);
+
+        this.ui.backupStatus = "success";
+        this.ui.backupMessage = "Backup erstellt. Bewahre die JSON-Datei sicher auf.";
+      } catch (error) {
+        console.error("[Morrow Money] Backup export failed:", error);
+        this.ui.backupStatus = "error";
+        this.ui.backupMessage = "Backup konnte nicht erstellt werden.";
+      }
+
+      this.refreshIcons();
+    },
+
+    importBackup(event) {
+      const input = event?.target;
+      const file = input?.files?.[0];
+      if (!file) return;
+
+      this.ui.backupStatus = "";
+      this.ui.backupMessage = "";
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || ""));
+
+          if (
+            !parsed ||
+            parsed.appId !== "morrow-money" ||
+            parsed.app !== "Morrow Money" ||
+            typeof parsed.data !== "object" ||
+            parsed.data === null
+          ) {
+            throw new Error("invalid_backup");
+          }
+
+          const backupSchema = Number(
+            parsed.schemaVersion || parsed.data.version || 1
+          );
+
+          if (!Number.isFinite(backupSchema) || backupSchema < 1) {
+            throw new Error("invalid_schema");
+          }
+
+          if (backupSchema > this.CURRENT_VERSION) {
+            throw new Error("newer_version");
+          }
+
+          const migrated = this.migrate(parsed.data);
+          const restored = this.deepMerge(
+            JSON.parse(JSON.stringify(this.data)),
+            migrated
+          );
+
+          if (
+            !restored.stats ||
+            !restored.graveyard ||
+            !restored.impulseTimer ||
+            !restored.futureMe
+          ) {
+            throw new Error("incomplete_backup");
+          }
+
+          this.data = restored;
+          this.persist();
+
+          this.ui.costResult = null;
+          this.ui.currentView = "dashboard";
+          this.ui.activeSheet = "settings";
+          this.ui.backupStatus = "success";
+          this.ui.backupMessage = "Backup erfolgreich wiederhergestellt.";
+
+          requestAnimationFrame(() => this.refreshIcons());
+        } catch (error) {
+          console.error("[Morrow Money] Backup import failed:", error);
+
+          this.ui.backupStatus = "error";
+
+          if (String(error?.message || "") === "newer_version") {
+            this.ui.backupMessage = "Dieses Backup stammt aus einer neueren Morrow-Money-Version.";
+          } else {
+            this.ui.backupMessage = "Die Datei ist kein gültiges Morrow-Money-Backup.";
+          }
+        } finally {
+          if (input) input.value = "";
+        }
+      };
+
+      reader.onerror = () => {
+        this.ui.backupStatus = "error";
+        this.ui.backupMessage = "Die Backup-Datei konnte nicht gelesen werden.";
+        if (input) input.value = "";
+      };
+
+      reader.readAsText(file);
+    },
+
+    resetData() {
+      const confirmed = window.confirm(
+        "Bist du sicher? Alle lokalen Morrow-Money-Daten – inklusive Graveyard, Money Saved, Impulse Timer, History und Future-Me-Szenarien – werden gelöscht."
+      );
+
+      if (!confirmed) return;
+
+      try {
+        if (this.futureChart) {
+          this.futureChart.destroy();
+          this.futureChart = null;
+        }
+
+        localStorage.removeItem(this.STORAGE_KEY);
+
+        this.data = {
+          version: this.CURRENT_VERSION,
+          settings: {
+            currency: "EUR",
+            locale: "de-DE"
+          },
+          profile: {
+            hourlyWage: 20
+          },
+          stats: {
+            moneySaved: 0,
+            skippedCount: 0,
+            boughtCount: 0
+          },
+          costTime: {
+            history: []
+          },
+          impulseTimer: {
+            items: []
+          },
+          graveyard: {
+            items: []
+          },
+          futureMe: {
+            annualReturn: 7,
+            years: 10,
+            scenarios: []
+          }
+        };
+
+        this.ui.costResult = null;
+        this.ui.formError = "";
+        this.ui.backupStatus = "success";
+        this.ui.backupMessage = "Alle lokalen Daten wurden gelöscht.";
+        this.ui.currentView = "dashboard";
+        this.ui.activeSheet = "settings";
+
+        this.persist();
+
+        requestAnimationFrame(() => this.refreshIcons());
+      } catch (error) {
+        console.error("[Morrow Money] Reset failed:", error);
+        this.ui.backupStatus = "error";
+        this.ui.backupMessage = "Die Daten konnten nicht vollständig gelöscht werden.";
+      }
+    },
+
+    revealInput(element) {
+      setTimeout(() => {
+        try {
+          element?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest"
+          });
+        } catch (_) {}
+      }, 300);
+    },
+
+    formatMoney(value) {
+      return new Intl.NumberFormat(this.data.settings.locale, {
+        style: "currency",
+        currency: this.data.settings.currency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }).format(Number(value) || 0);
+    },
+
+    formatCompactMoney(value) {
+      const amount = Number(value) || 0;
+      const abs = Math.abs(amount);
+
+      if (abs < 100000) return this.formatMoney(amount);
+
+      return new Intl.NumberFormat(this.data.settings.locale, {
+        notation: "compact",
+        compactDisplay: "short",
+        style: "currency",
+        currency: this.data.settings.currency,
+        maximumFractionDigits: 1
+      }).format(amount);
+    },
+
+    formatNumber(value, digits = 1) {
+      return new Intl.NumberFormat(this.data.settings.locale, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: digits
+      }).format(Number(value) || 0);
+    },
+
+    formatPercent(value) {
+      return new Intl.NumberFormat(this.data.settings.locale, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 1
+      }).format(Number(value) || 0) + "%";
+    },
+
+    formatWorkTime(totalMinutes) {
+      const minutes = Math.max(0, Math.round(Number(totalMinutes) || 0));
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+
+      if (hours === 0) return `${mins} min`;
+      if (mins === 0) return `${hours} h`;
+      return `${hours} h ${mins} min`;
+    },
+
+    formatDate(value) {
+      try {
+        return new Intl.DateTimeFormat(this.data.settings.locale, {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        }).format(new Date(value));
+      } catch {
+        return "";
+      }
+    },
+
+    id() {
+      if (window.crypto?.randomUUID) return crypto.randomUUID();
+      return "mm-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+    },
+
+    refreshIcons() {
+      if (!window.lucide) return;
+      requestAnimationFrame(() => lucide.createIcons());
     }
   });
 
-  let refreshing = false;
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!refreshing) {
-      refreshing = true;
-      window.location.reload();
-    }
-  });
-}
+  Alpine.store("spine").init();
+});
 </script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .catch(error => {
+          console.error('[Morrow Money] Service Worker registration failed:', error);
+        });
+    });
+  }
+</script>
+
 </body>
 </html>
